@@ -89,6 +89,7 @@ d3.json("data/sample_data.json", function (error, graph) {
         .attr("r", 30)
         .style("fill", function (d) { return color(o(d.type)); })
         .attr("id", data => data.id)
+        .attr("name", "circle")
         .call(force.drag)
         .on("mouseover", function (d) {
             d3.select(this)
@@ -171,13 +172,17 @@ function highlightNodes(e, lower_age) {
             
         }
     }
-    console.log(ids);
+    d3.selectAll('circle').attr('class', 'dim');
+    for (var i = 0; i < ids.length; i++) {
+        document.getElementById(ids[i]).classList.toggle("dim");
+    }   
 };
 
 search_box.addEventListener("keydown", function (e) {
     if (e.code === 'Enter' && search_box.value != null) {
         highlightNodes(e, search_box.value);
     }
+    
 });
 
 

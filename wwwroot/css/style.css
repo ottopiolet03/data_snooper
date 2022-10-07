@@ -13,6 +13,11 @@
 circle {
     stroke: #333;
     stroke-width: 1.5px;
+    filter: brightness(130%);
+}
+
+.dim {
+    filter: brightness(40%);
 }
 
 text {
@@ -20,6 +25,7 @@ text {
     font-weight: bolder;
     pointer-events: none;
     text-anchor: middle;
+    filter: brightness(80%)
 }
 
 text.node-label {
