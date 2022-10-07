@@ -1,4 +1,4 @@
-
+alert('Github published');
 var width = window.innerWidth - 10,
         height = .8*window.innerHeight ,
         color = d3.scale.category10();
