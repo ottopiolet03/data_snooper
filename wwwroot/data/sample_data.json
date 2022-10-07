@@ -1,0 +1,177 @@
+{
+  "mode": "NORMAL",
+  "vertices": [
+    {
+      "id": "328fdb14-0d64-4dac-9f0a-4bcce74f8ede",
+      "label": "view",
+      "type": "vertex",
+      "properties": {
+        "pk": [
+          {
+            "id": "328fdb14-0d64-4dac-9f0a-4bcce74f8ede|pk",
+            "value": "8234"
+          }
+        ],
+        "last_accessed": [
+          {
+            "id": "4254a3bd-3504-4aad-b6fa-b3af4558c9ac",
+            "value": 30
+          }
+        ],
+        "schema": [
+          {
+            "id": "963e7e1a-cd82-439b-9a60-4e219bfb5d22",
+            "value": "omnichannel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "6be25d49-a9cc-4711-a72e-b71a712159e5",
+      "label": "view",
+      "type": "vertex",
+      "properties": {
+        "pk": [
+          {
+            "id": "6be25d49-a9cc-4711-a72e-b71a712159e5|pk",
+            "value": "0349"
+          }
+        ],
+        "last_accessed": [
+          {
+            "id": "ff62f512-bd6d-4a07-a939-c2dd5d781fb7",
+            "value": 11
+          }
+        ],
+        "schema": [
+          {
+            "id": "2fc5b9fe-f6d9-4180-bc20-8603f826a870",
+            "value": "omnichannel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "6b6d9930-f9db-43c8-badb-33270c7b829d",
+      "label": "table",
+      "type": "vertex",
+      "properties": {
+        "pk": [
+          {
+            "id": "6b6d9930-f9db-43c8-badb-33270c7b829d|pk",
+            "value": "8998"
+          }
+        ],
+        "last_accessed": [
+          {
+            "id": "767adac3-99d8-43fe-a0ef-5af4b446c59a",
+            "value": 0
+          }
+        ],
+        "schema": [
+          {
+            "id": "154c5264-0dd7-47f3-bcb8-794d882e1f17",
+            "value": "omnichannel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "630cc267-8787-4ffa-9b2c-c148092f46a0",
+      "label": "table",
+      "type": "vertex",
+      "properties": {
+        "pk": [
+          {
+            "id": "630cc267-8787-4ffa-9b2c-c148092f46a0|pk",
+            "value": "1244"
+          }
+        ],
+        "last_accessed": [
+          {
+            "id": "5d33e6dc-32a6-4e63-b40f-9397500303a8",
+            "value": 15
+          }
+        ],
+        "schema": [
+          {
+            "id": "02eadf7d-4ef3-4036-aa1f-eb97754ca3ba",
+            "value": "pseudochannel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "06d799a8-0a30-4a21-964b-cd4802928fd8",
+      "label": "view",
+      "type": "vertex",
+      "properties": {
+        "pk": [
+          {
+            "id": "06d799a8-0a30-4a21-964b-cd4802928fd8|pk",
+            "value": "2240"
+          }
+        ],
+        "last_accessed": [
+          {
+            "id": "d70ca3b8-bc93-46b2-8b39-cd326a68aee9",
+            "value": 90
+          }
+        ],
+        "schema": [
+          {
+            "id": "c7adcddc-ab28-4197-a96e-6cde1bc6b0f0",
+            "value": "omnichannel"
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "b6206d3f-1410-4a2a-82cc-e1f8c3dc66b3",
+      "label": "parent",
+      "type": "edge",
+      "inVLabel": "view",
+      "outVLabel": "view",
+      "inV": "328fdb14-0d64-4dac-9f0a-4bcce74f8ede",
+      "outV": "6be25d49-a9cc-4711-a72e-b71a712159e5"
+    },
+    {
+      "id": "f6513c42-dc10-4685-8cc4-c08c89d4378c",
+      "label": "parent",
+      "type": "edge",
+      "inVLabel": "table",
+      "outVLabel": "view",
+      "inV": "6b6d9930-f9db-43c8-badb-33270c7b829d",
+      "outV": "328fdb14-0d64-4dac-9f0a-4bcce74f8ede"
+    },
+    {
+      "id": "5347ad60-b184-43bf-9e6f-673b24e380ae",
+      "label": "parent",
+      "type": "edge",
+      "inVLabel": "table",
+      "outVLabel": "view",
+      "inV": "6b6d9930-f9db-43c8-badb-33270c7b829d",
+      "outV": "328fdb14-0d64-4dac-9f0a-4bcce74f8ede"
+    },
+    {
+      "id": "df1302c6-a65d-46e7-87ee-9f0d45676ce8",
+      "label": "parent",
+      "type": "edge",
+      "inVLabel": "table",
+      "outVLabel": "view",
+      "inV": "630cc267-8787-4ffa-9b2c-c148092f46a0",
+      "outV": "328fdb14-0d64-4dac-9f0a-4bcce74f8ede"
+    },
+    {
+      "id": "e7abe557-a905-49ec-9a4e-bed5517453b9",
+      "label": "parent",
+      "type": "edge",
+      "inVLabel": "view",
+      "outVLabel": "table",
+      "inV": "06d799a8-0a30-4a21-964b-cd4802928fd8",
+      "outV": "630cc267-8787-4ffa-9b2c-c148092f46a0"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "d3": "^7.6.1",
+    "express": "^4.18.1",
+    "path": "^0.12.7"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "data_snooper",
+  "description": "<a href=\"http://d3js.org/\">D3.js</a> visualization of <i>The Graph of the Gods</i>, a <a href=\"http://s3.thinkaurelius.com/docs/titan/0.5.4/getting-started.html\">toy graph<a> taken as an example from the <a href=\"http://thinkaurelius.github.io/titan/\">Titan</a> graph database through <a href=\"https://github.com/tinkerpop/gremlin/wiki\">Gremlin</a>.",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://ottomajtenyi@dev.azure.com/ottomajtenyi/DataSnooper/_git/front_end"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {}
+}
