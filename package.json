@@ -2,7 +2,9 @@
   "dependencies": {
     "d3": "^7.6.1",
     "express": "^4.18.1",
-    "path": "^0.12.7"
+    "gremlin": "^3.6.1",
+    "path": "^0.12.7",
+    "requirejs": "^2.3.6"
   },
   "scripts": {
     "start": "node server.js"
@@ -16,6 +18,5 @@
     "url": "https://ottomajtenyi@dev.azure.com/ottomajtenyi/DataSnooper/_git/front_end"
   },
   "author": "",
-  "license": "ISC",
-  "devDependencies": {}
+  "license": "ISC"
 }
