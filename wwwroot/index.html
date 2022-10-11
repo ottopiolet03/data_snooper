@@ -11,11 +11,23 @@
 </head>
     <body>
         <div class="topnav">
-            <a class="active" href="#home">Profile</a>
-            <a><input type="text" id="search_input" placeholder="__ days since use..." /></a>
-            <a onclick="location.reload()">Refresh</a>
-            <a href="#contact">Lock</a>
-            <a href="#about">Details</a>
+            <div class="nav_element" id="search_type">
+                <select name="search_type_input" id="search_drop_down">
+                    <option value="id">ID</option>
+                    <option value="type">Type</option>
+                    <option value="schema">Schema</option>
+                    <option value="last_accessed">Days since Last Accessed</option>
+                </select>
+            </div>
+            <div class="nav_element">
+                <a><input type="text" id="search_input" placeholder="enter search" /></a>
+            </div>
+            <button onclick="document.getElementById('search_input').value = ''; d3.selectAll('circle').attr('class', null);" id="clear_button" class="nav_element">
+                Clear
+            </button>
+            <button onclick="location.reload()" class="nav_element">
+                Refresh
+            </button>         
         </div>
         <script src="js/script.js"></script>
         <div class="detail_display">

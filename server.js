@@ -25,7 +25,7 @@ client.submit("g.V()", {}).then((vertex_res) => {
     client.submit("g.E()", {}).then((edge_result) => {
         let edges = edge_result;
         let datae = {vertices, edges };
-        console.log(datae);
+        //console.log(datae);
         const app = express();
         const port = process.env.PORT || 8080;
 

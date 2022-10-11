@@ -1,33 +1,32 @@
 
+var width = window.innerWidth - 10,
+    height = .8 * window.innerHeight,
+    color = d3.scale.category10();
+
+// force layout setup
+var force = d3.layout.force()
+    .charge(-1500)
+    .linkDistance(200)
+    .size([width, height]);
+
+// setup svg div
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("pointer-events", "all");
+
 let data;
 fetch('/data').then(function (res) {
     
-    res.json().then(d => {  
-        data = { 'vertices': d.vertices._items, 'edges': d.edges._items };
-        console.log(data);
-        var width = window.innerWidth - 10,
-            height = .8 * window.innerHeight,
-            color = d3.scale.category10();
-
-        // force layout setup
-        var force = d3.layout.force()
-            .charge(-1500)
-            .linkDistance(200)
-            .size([width, height]);
-
-        // setup svg div
-        var svg = d3.select("body").append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .attr("pointer-events", "all");
-
+    res.json().then(d => { 
+        data = { 'vertices': d.vertices._items, 'edges': d.edges._items };    
         var nodes = {}, links = {}, types = [];
         // load graph (vertices, edges) from json
         //d3.json("data/graph-of-the-gods.json", function (error, graph) {
         let graph = data;
         // assign vertices to nodes array
         graph.vertices.forEach(function (vertex) {
-            nodes[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, /*last_accessed: vertex.properties.last_accessed[0].value, schema: vertex.properties.schema[0].value */};
+            nodes[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, schema: vertex.properties.schema[0].value, /*last_accessed: vertex.properties.last_accessed[0].value, schema: vertex.properties.schema[0].value */};
             if (types.indexOf(vertex.label) === -1) {
                 types.push(vertex.label);
             }
@@ -55,7 +54,7 @@ fetch('/data').then(function (res) {
             .attr("refY", 0)
             .attr("markerWidth", 8)
             .attr("markerHeight", 8)
-            .attr("orient", "auto")
+            .attr("orient", "auto")                                  //to switch arrow directions, auto => auto-start-reverse
             .append("path")
             .attr("fill", "#666")
             .attr("stroke", "#666")
@@ -70,7 +69,7 @@ fetch('/data').then(function (res) {
             .enter().append("path")
             .attr("stroke", "#666")
             .attr("class", function (d) { return d.label; })
-            .attr("marker-end", "url(#arrow-head)");
+            .attr("marker-end", "url(#arrow-head)");                 //to switch arrow directions, marker-end => marker-start
 
         // label displayed for links
         var label = svg.append("g").selectAll("text")
@@ -167,27 +166,54 @@ fetch('/data').then(function (res) {
         //search field code -----------------------------------------------------------------------------------------------
 
         var search_box = document.getElementById("search_input");
+        var search_input = document.getElementById("search_drop_down");
 
-        function highlightNodes(e, lower_age) {
+        function highlightNodes(e, input, search_type) {
             d3.selectAll('circle').attr('class', 'dim');
-            for (let n in nodes) {
-                if (nodes[n].last_accessed >= lower_age) {
-                    document.getElementById(nodes[n].id).classList.toggle("dim");
-                }
+            switch (search_type) {
+                case 'id':
+                    for (let n in nodes) {
+                        if (nodes[n].id == input) {
+                            document.getElementById(nodes[n].id).classList.toggle("dim");
+                        }
+                    }
+                    break;
+                case 'type':
+                    for (let n in nodes) {
+                        if (nodes[n].type.toLowerCase() == input.toLowerCase()) {
+                            document.getElementById(nodes[n].id).classList.toggle("dim");
+                        }
+                    }
+                    break;
+                case 'schema':
+                    for (let n in nodes) {
+                        if (nodes[n].schema.toLowerCase() == input.toLowerCase()) {
+                            document.getElementById(nodes[n].id).classList.toggle("dim");
+                        }
+                    }
+                    break;
+                case 'last_accessed':
+                    for (let n in nodes) {
+                        if (nodes[n].last_accessed >= input) {
+                            document.getElementById(nodes[n].id).classList.toggle("dim");
+                        }
+                    }
+                    break;
+                default:
+                    throw Error();
             }
+            
         };
 
         search_box.addEventListener("keydown", function (e) {
-            if (e.code === 'Enter' && search_box.value != null) {
-                highlightNodes(e, search_box.value);
+            if (e.code === 'Enter' && search_box.value != null && search_box.value != "") {
+                highlightNodes(e, search_box.value, search_input.value);
             }
-
+            else if (e.code === 'Enter'  && search_box.value == "") {
+                d3.selectAll('circle').attr('class', null);
+            }
         });
-
-
-
     });
-
 });
     
 
