@@ -366,3 +366,4 @@ FodyWeavers.xsd
 #config file
 
 wwwroot/js/config.js
+sql-cosmos/config

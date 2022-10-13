@@ -37,7 +37,7 @@ fetch('/data').then(function (res) {
         });
 
 
-        //make SVG graph
+        //make SVG graph, appends to svg object already created
         function newSVG(nodes, links) {
             
 
