@@ -1,24 +1,33 @@
 const { Connection, Request } = require("tedious");
 const sql_config = require('./config/sql_config');
 
+
+//global variables
 var server_name;
 var database_name;
 var username;
 var password;
-var connection;
+var connection;    //this is connection to selected database
 
-// Create connection to database
+var selected_database = 'test-sql-snooper';
+
+// Create connection to config database
 const connection_config = new Connection(sql_config);
+
 connection_config.on("connect", err => {
     if (err) {
         console.error(err.message);
     } else {
-        var request = new Request(`SELECT * FROM [dbo].[configs]`,    
+        //after connection is made, make and send request
+        var request = new Request(`SELECT * FROM [dbo].[configs] WHERE DatabaseName = '${selected_database}'`,             
             (err, rowCount) => {
                 if (err) { console.error(err) }
                 else {
+                    //after request is made, connect to chosen database
                     connection_config.close();
                     console.log(server_name);
+
+                    //set up config to database that was chosen
                     const config = {
                         authentication: {
                             options: {
@@ -38,6 +47,7 @@ connection_config.on("connect", err => {
                         if (err) {
                             console.error(err.message);
                         } else {
+                            //after connection made, run queries
                             queryDatabase();
 
                         }
@@ -46,17 +56,20 @@ connection_config.on("connect", err => {
                 }
             }
         );
+        //on request, store needed info
         request.on('row', columns => {
             server_name = columns[2].value;
             database_name = columns[0].value;
             username = columns[1].value;
             password = columns[3].value;
         });
+
         connection_config.execSql(request);
     }
 });
 
 connection_config.connect();
+
 
 
 var nodes = [];
@@ -89,7 +102,7 @@ function queryDatabase() {
 
     //make input into json
     request_db.on("row", columns => {
-        var input = { 'TABLE_CATALOG': columns[0].value, 'TABLE_SCHEMA': columns[1].value, 'TABLE_NAME': columns[2].value, 'TABLE_TYPE': columns[3].value, 'FULL_TABLE_NAME': columns[1].value + '.' + columns[2].value };
+        var input = { 'TABLE_CATALOG': columns[0].value, 'TABLE_SCHEMA': columns[1].value, 'TABLE_NAME': columns[2].value, 'TABLE_TYPE': columns[3].value, 'FULL_TABLE_NAME': columns[0].value + '.' + columns[1].value + '.' + columns[2].value };
         node_queue.push(columns[1].value + '.' + columns[2].value);
         nodes.push(input);
     });
@@ -117,7 +130,7 @@ function queryDatabase() {
     );
 
     request_table.on("row", columns => {
-        var input = { 'TABLE_CATALOG': columns[0].value, 'TABLE_SCHEMA': columns[1].value, 'TABLE_NAME': columns[2].value, 'TABLE_TYPE': 'TABLE', 'FULL_TABLE_NAME': columns[1].value + '.' + columns[2].value };
+        var input = { 'TABLE_CATALOG': columns[0].value, 'TABLE_SCHEMA': columns[1].value, 'TABLE_NAME': columns[2].value, 'TABLE_TYPE': 'TABLE', 'FULL_TABLE_NAME': columns[0].value + '.' + columns[1].value + '.' + columns[2].value };
         nodes.push(input);
     });
 
@@ -152,7 +165,7 @@ function queryDatabase() {
         );
 
         request_table_edges.on("row", columns => {
-            edges.push({ 'source': node_name, 'target': columns[2].value + '.' + columns[0].value, 'type': columns[1].value, 'source_color': "#17fc03", 'target_color': "#e8b719" });
+            edges.push({ 'source': selected_database+ '.' + node_name, 'target': selected_database + '.' + columns[2].value + '.' + columns[0].value, 'type': columns[1].value, 'source_color': "#17fc03", 'target_color': "#e8b719" });
         });
         return request_table_edges;
     }
@@ -183,10 +196,7 @@ function startGremlin() {
     );
 
     function cleanGraph() {
-        client.submit('g.V().drop()').then(res => {
-            console.log("Result: %s\n", JSON.stringify(res));
-            insertVertices();
-        });
+        insertVertices();
     }
 
 

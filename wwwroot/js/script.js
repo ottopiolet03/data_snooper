@@ -5,7 +5,7 @@ var width = window.innerWidth - 10,
 
 // force layout setup
 var force = d3.layout.force()
-    .charge(-1000)
+    .charge(-500)
     .linkDistance(200)
     .size([width, height]);
 
@@ -25,7 +25,7 @@ fetch('/data').then(function (res) {
         let graph = data;
         // assign vertices to nodes array
         graph.vertices.forEach(function (vertex) {
-            nodes[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, schema: vertex.properties.schema[0].value, /*last_accessed: vertex.properties.last_accessed[0].value, schema: vertex.properties.schema[0].value */};
+            nodes[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, schema: vertex.properties.schema[0].value, database: vertex.properties.database[0].value /*last_accessed: vertex.properties.last_accessed[0].value, schema: vertex.properties.schema[0].value */};
             if (types.indexOf(vertex.label) === -1) {
                 types.push(vertex.label);
             }
@@ -252,6 +252,27 @@ fetch('/data').then(function (res) {
                 case 'last_accessed':
                     for (let n in nodes) {
                         if (nodes[n].last_accessed == input) {
+                            newNodes[n] = nodes[n];
+                            for (link_ind in links) {
+                                if (links[link_ind].source.id == n) {
+                                    let child = links[link_ind].target.id;
+                                    newNodes[child] = nodes[child];
+                                    newLinks[link_ind] = links[link_ind];
+                                }
+                                else if (links[link_ind].target.id == n) {
+                                    let parent = links[link_ind].source.id;
+                                    newNodes[parent] = nodes[parent];
+                                    newLinks[link_ind] = links[link_ind];
+                                }
+                            }
+                        }
+                    }
+                    clear_svg();
+                    newSVG(newNodes, newLinks);
+                    break;
+                case 'database':
+                    for (let n in nodes) {
+                        if (nodes[n].database == input) {
                             newNodes[n] = nodes[n];
                             for (link_ind in links) {
                                 if (links[link_ind].source.id == n) {
