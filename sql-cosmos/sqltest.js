@@ -196,7 +196,9 @@ function startGremlin() {
     );
 
     function cleanGraph() {
-        insertVertices();
+        client.submit(`g.V().has('database','${selected_database}').drop()`).then(res => {
+            insertVertices();
+        })
     }
 
 
