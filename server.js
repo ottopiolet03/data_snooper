@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 
 const Gremlin = require('gremlin');
-const config = require('./wwwroot/js/config');
+const config = require('./sql-cosmos/config/cosmos_config');
 
 
 //set up functions to recieve data from Cosmos DB

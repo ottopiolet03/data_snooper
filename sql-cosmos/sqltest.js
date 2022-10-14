@@ -1,10 +1,62 @@
 const { Connection, Request } = require("tedious");
 const sql_config = require('./config/sql_config');
 
+var server_name;
+var database_name;
+var username;
+var password;
+var connection;
 
 // Create connection to database
-const connection = new Connection(sql_config);
+const connection_config = new Connection(sql_config);
+connection_config.on("connect", err => {
+    if (err) {
+        console.error(err.message);
+    } else {
+        var request = new Request(`SELECT * FROM [dbo].[configs]`,    
+            (err, rowCount) => {
+                if (err) { console.error(err) }
+                else {
+                    connection_config.close();
+                    console.log(server_name);
+                    const config = {
+                        authentication: {
+                            options: {
+                                userName: username, 
+                                password: password 
+                            },
+                            type: "default"
+                        },
+                        server: server_name,
+                        options: {
+                            database: database_name, 
+                            encrypt: true
+                        }
+                    };
+                    connection = new Connection(config);
+                    connection.on("connect", err => {
+                        if (err) {
+                            console.error(err.message);
+                        } else {
+                            queryDatabase();
 
+                        }
+                    });
+                    connection.connect();
+                }
+            }
+        );
+        request.on('row', columns => {
+            server_name = columns[2].value;
+            database_name = columns[0].value;
+            username = columns[1].value;
+            password = columns[3].value;
+        });
+        connection_config.execSql(request);
+    }
+});
+
+connection_config.connect();
 
 
 var nodes = [];
@@ -12,17 +64,7 @@ var edges = [];
 var node_queue = [];     // this is only views
 
 
-// Attempt to connect and execute queries if connection goes through
-connection.on("connect", err => {
-    if (err) {
-        console.error(err.message);
-    } else {
-        queryDatabase();
 
-    }
-});
-
-connection.connect();
 
 function queryDatabase() {
 
@@ -75,7 +117,7 @@ function queryDatabase() {
     );
 
     request_table.on("row", columns => {
-        var input = { 'TABLE_CATALOG': columns[0].value, 'TABLE_SCHEMA': columns[1].value, 'TABLE_NAME': columns[2].value, 'TABLE_TYPE': columns[3].value, 'FULL_TABLE_NAME': columns[1].value + '.' + columns[2].value };
+        var input = { 'TABLE_CATALOG': columns[0].value, 'TABLE_SCHEMA': columns[1].value, 'TABLE_NAME': columns[2].value, 'TABLE_TYPE': 'TABLE', 'FULL_TABLE_NAME': columns[1].value + '.' + columns[2].value };
         nodes.push(input);
     });
 

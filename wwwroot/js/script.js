@@ -19,7 +19,7 @@ let data;
 fetch('/data').then(function (res) {
     res.json().then(d => { 
         data = { 'vertices': d.vertices._items, 'edges': d.edges._items };    
-        var nodes = {}, links = {}, types = [];
+        var nodes = {}, links = {}, types = ['TABLE', 'VIEW'];
         
         //d3.json("data/graph-of-the-gods.json", function (error, graph) {
         let graph = data;
@@ -30,7 +30,7 @@ fetch('/data').then(function (res) {
                 types.push(vertex.label);
             }
         });
-
+        
         // assign edges to links array
         graph.edges.forEach(function (edge) {
             links[edge.id] = { source: nodes[edge.outV], target: nodes[edge.inV], label: edge.label };
@@ -81,6 +81,7 @@ fetch('/data').then(function (res) {
                 .text(function (d) { return d.label; });
 
             // color according to nodes type
+            
             var o = d3.scale.ordinal()
                 .domain(types)
                 .rangePoints([0, 5]);
