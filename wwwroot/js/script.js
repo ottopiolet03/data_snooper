@@ -11,8 +11,9 @@ var force = d3.layout.force()
 
 var nodes = {}, links = {}, types = ['TABLE', 'VIEW'];
 
-$('#load').on('click', event => {
-    var database_name = document.getElementById('database_drop_down').value;
+
+function load_data(database_name) {
+    
     fetch('/sqltest', {
         headers: {
             'Accept': 'application/json',
@@ -23,32 +24,38 @@ $('#load').on('click', event => {
     }).then(function (res) {
         res.json().then(d => {
             data = { 'vertices': d.vertices._items, 'edges': d.edges._items };
-            for (let key in nodes) {
-                delete nodes[key];
-            }
-            console.log(nodes);
-            links = {};
-            types = ['TABLE', 'VIEW'];
+            let nodes1 = {};
+            let links1 = {};
+
             //d3.json("data/graph-of-the-gods.json", function (error, graph) {
             let graph = data;
             // assign vertices to nodes array
             graph.vertices.forEach(function (vertex) {
-                nodes[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, schema: vertex.properties.schema[0].value, database: vertex.properties.database[0].value /*last_accessed: vertex.properties.last_accessed[0].value, schema: vertex.properties.schema[0].value */ };
+                nodes1[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, schema: vertex.properties.schema[0].value, database: vertex.properties.database[0].value /*last_accessed: vertex.properties.last_accessed[0].value, schema: vertex.properties.schema[0].value */ };
                 if (types.indexOf(vertex.label) === -1) {
                     types.push(vertex.label);
                 }
             });
             // assign edges to links array
             graph.edges.forEach(function (edge) {
-                links[edge.id] = { source: nodes[edge.outV], target: nodes[edge.inV], label: edge.label };
+                links1[edge.id] = { source: nodes1[edge.outV], target: nodes1[edge.inV], label: edge.label };
             });
-            console.log(nodes);
             //make SVG graph, appends to svg object already created
             clear_svg();
-            newSVG(nodes, links);
+            nodes = nodes1;
+            links = links1;
+            newSVG(nodes1, links1);
         });
-    }).catch(res=>console.log(res));
+    }).catch(res => console.log(res));
+};
+
+
+$('#load').on('click', event => {
+    var database_name = document.getElementById('database_drop_down').value;
+    load_data(database_name);
 });
+
+
 
 // setup svg div
 var svg = d3.select("body").append("svg")
@@ -56,6 +63,7 @@ var svg = d3.select("body").append("svg")
     .attr("height", height)
     .attr("pointer-events", "all")
 
+/*
 let data;
 fetch('/data').then(function (res) {
     res.json().then(d => { 
@@ -68,7 +76,7 @@ fetch('/data').then(function (res) {
         let graph = data;
         // assign vertices to nodes array
         graph.vertices.forEach(function (vertex) {
-            nodes[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, schema: vertex.properties.schema[0].value, database: vertex.properties.database[0].value /*last_accessed: vertex.properties.last_accessed[0].value, schema: vertex.properties.schema[0].value */};
+            nodes[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, schema: vertex.properties.schema[0].value, database: vertex.properties.database[0].value };
             if (types.indexOf(vertex.label) === -1) {
                 types.push(vertex.label);
             }
@@ -84,7 +92,9 @@ fetch('/data').then(function (res) {
 
         newSVG(nodes, links);
     });
-});
+}); 
+
+*/
 
 function newSVG(nodes, links) {
 

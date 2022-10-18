@@ -26,6 +26,11 @@ circle {
     filter: brightness(40%);
 }
 
+textarea {
+    background: white;
+    color: black;
+}
+
 text {
     font: 12px sans-serif;
     font-weight: bolder;

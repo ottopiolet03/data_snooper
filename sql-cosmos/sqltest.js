@@ -249,7 +249,7 @@ function sqltest(database) {
             function return_vertices_edges() {
                 client.submit(`g.V().has('database','${selected_database}')`, {}).then((vertex_res) => {
                     vertices = vertex_res;
-                    client.submit("g.E()", {}).then((edge_result) => {
+                    client.submit(`g.V().has('database','${selected_database}').bothE()`, {}).then((edge_result) => {
                         let edges = edge_result;
                         client.close();
                         data = { vertices, edges };

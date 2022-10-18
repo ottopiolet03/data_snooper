@@ -4,58 +4,48 @@ const bodyParser = require('body-parser');
 // create application/json parser
 var jsonParser = bodyParser.json()
 
-const Gremlin = require('gremlin');
-const config = require('./sql-cosmos/config/cosmos_config');
-
-
 const sqltest = require('./sql-cosmos/sqltest.js');
+const insert_sql = require('./sql-cosmos/insert_sql.js');
+const get_configs = require('./sql-cosmos/get_configs.js');
 //set up functions to recieve data from Cosmos DB
-const authenticator = new Gremlin.driver.auth.PlainTextSaslAuthenticator(`/dbs/${config.database}/colls/${config.collection}`, config.primaryKey)
-
-const client = new Gremlin.driver.Client(
-    config.endpoint,
-    {
-        authenticator,
-        traversalsource: "g",
-        rejectUnauthorized: true,
-        mimeType: "application/vnd.gremlin-v2.0+json"
-    }
-);
 
 
-let vertices;
-client.submit("g.V()", {}).then((vertex_res) => {
-    vertices = vertex_res;
-    client.submit("g.E()", {}).then((edge_result) => {
-        let edges = edge_result;
-        let datae = {vertices, edges };
-        //console.log(datae);
-        const app = express();
-        const port = process.env.PORT || 8080;
 
-        app.use(express.static(__dirname + "/wwwroot"));
-        // sendFile will go here
-        app.use(express.json());
+const app = express();
+const port = process.env.PORT || 8080;
 
-        app.get('/', function (req, res) {
-            res.sendFile(path.join(__dirname, '/index.html'));
-        });
-        app.get('/data', function (req, res) {
-            res.send(datae);
-        });
-        app.post('/sqltest', jsonParser, function (request, result) {
-            var data = sqltest.load_data(request.body.name);
-            data.then(res => {
-                result.send(res);
-            });
+app.use(express.static(__dirname + "/wwwroot"));
+// sendFile will go here
+app.use(express.json());
 
-        });
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, '/index.html'));
+});
+app.get('/load_configs', function (req, result) {
+    var data = get_configs.get_configs();
+    data.then(res => {
+        result.send(res);
+    })
+})
+app.post('/insert_sql', function (req, res) {
+    let body = req.body;
+    let server = body.server;
+    let database = body.database;
+    let username = body.username;
+    let password = body.password;
+    insert_sql.insert_sql(server, database, username, password);
+});
 
-        app.listen(port);
-        console.log('Server started at http://localhost:' + port);
+app.post('/sqltest', jsonParser, function (request, result) {
+    var data = sqltest.load_data(request.body.name);
+    data.then(res => {
+        result.send(res);
     });
 });
 
+app.listen(port);
+console.log('Server started at http://localhost:' + port);
+  
 
 
 
