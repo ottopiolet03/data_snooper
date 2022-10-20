@@ -76,6 +76,12 @@ $(document).ready(function () {
     }).then(res => {
         res.json().then(d => {
             load_data(d.database);
+            let configs = d.configs;
+            for (let key in configs) {
+                let option = `<option value="${configs[key].database}">${configs[key].database}</option>`;
+                $(option).appendTo('#database_drop_down');
+            }
+
         })
     });
 })

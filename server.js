@@ -14,6 +14,7 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 let database = 'default';
+let configs;
 
 app.use(express.static(__dirname + "/wwwroot"));
 // sendFile will go here
@@ -21,12 +22,11 @@ app.use(express.json());
 
 app.post('/', function (req, res) {
     database = req.body.database;
-    console.log(database);
+    configs = req.body.configs;
     res.sendFile(path.join(__dirname, '/index.html'));
 });
 app.post('/database', function (req, res) {
-    console.log(database);
-    res.send(JSON.stringify({ database: database }));
+    res.send(JSON.stringify({ database: database, configs: configs }));
 });
 app.get('/load_configs', function (req, result) {
     var data = sql_func.get_configs();

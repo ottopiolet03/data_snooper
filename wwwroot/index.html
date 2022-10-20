@@ -4,59 +4,60 @@
     <title>Data Snooper on JS</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://d3js.org/d3.v3.min.js"></script>
-   
+    <title>Data Snooper </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style2.css">
+
 </head>
-    <body>
-        <div class="topnav">
-            <div class="nav_element" id="search_type">
-                <select name="search_type_input" id="search_drop_down">
-                    <option value="id">ID</option>
-                    <option value="type">Type</option>
-                    <option value="schema">Schema</option>
-                    <option value="last_accessed">Days since Last Accessed</option>
-                    <option value="database">Database</option>
-                </select>
-            </div>
-            <div class="nav_element">
-                <a><input type="text" id="search_input" placeholder="enter search" /></a>
-            </div>
-            <button id="clear_button" class="nav_element">
-                Clear
-            </button>
-            <button onclick="location.reload()" class="nav_element">
-                Refresh
-            </button>   
-            <button class="nav_element" id="load">
-                Load
-            </button>
-            <div class="nav_element" id="database_names">
-                <select name="database_name_input" id="database_drop_down">
-                    <option value="test-sql-snooper">test-sql-snooper</option>
-                    <option value="test-sql-snooper1">test-sql-snooper1</option>
-                </select>
-            </div>
-        </div>
-        <script src="js/script.js"></script>
-        <div class="detail_display">
-            <div class="row">
-                <div class="column headers">ID</div>
-                <div class="column headers">Database</div>
-                <div class="column headers">Type</div>
-                <div class="column headers">Schema</div>
-                <div class="column headers">Last Accessed</div>
+<body>
 
+    <!---Header Section-->
 
-            </div>
-            <div class="row">
-                <div class="column data" id="node_id"> </div>
-                <div class="column data" id="node_database"> </div>
-                <div class="column data" id="node_label"> </div>
-                <div class="column data" id="node_schema"> </div>
-                <div class="column data" id="node_last_accessed"> </div>
-            </div>
+    <header class="header">
+
+        <h1 id="logo" onclick="location.reload()">Data Snooper </h1>
+        <meta http-equiv="refresh" content="Onclick">
+        <nav class="topnav">
+            <a id="add_config">ADD</a>
+            <a id="clear_inputs">CLEAR</a>
+        </nav>
+
+    </header>
+
+    <div class="main">
+        <div class="config-container">
+            <form id="config">
+                <label for="server">Server: </label>
+                <input id="server_input" type="text"/>
+                <label for="database">Database: </label>
+                <input id="database_input" type="text"/>
+                <label for="username">Username: </label>
+                <input type="text" id="username_input"/>
+                <label for="password">password: </label>
+                <input type="text" id="password_input"/>
+
+            </form>
         </div>
-    </body>
+
+        <button id="table_add" class="Add table_button">ADD</button>
+        <button id="table_load" class="Load table_button">LOAD</button>
+        <button id="table_delete" class="Delete table_button">DELETE</button>
+        <div class="table-div">
+            <table id="data-table">
+                <tbody>
+                    <tr>
+                        <th>Server</th>
+                        <th id="id">Database</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <!--<td data-label="#"><a href="Load" class="btn">Load</a></td>-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="js/testscript.js"></script>
+</body>
 </html>
