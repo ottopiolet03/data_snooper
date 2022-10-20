@@ -50,6 +50,7 @@ function load_data(database_name) {
 };
 
 
+
 $('#load').on('click', event => {
     var database_name = document.getElementById('database_drop_down').value;
     load_data(database_name);
@@ -63,38 +64,22 @@ var svg = d3.select("body").append("svg")
     .attr("height", height)
     .attr("pointer-events", "all")
 
-/*
-let data;
-fetch('/data').then(function (res) {
-    res.json().then(d => { 
-        data = { 'vertices': d.vertices._items, 'edges': d.edges._items };    
-        
-        nodes = {};
-        links = {};
-        types = ['TABLE', 'VIEW'];
-        //d3.json("data/graph-of-the-gods.json", function (error, graph) {
-        let graph = data;
-        // assign vertices to nodes array
-        graph.vertices.forEach(function (vertex) {
-            nodes[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, schema: vertex.properties.schema[0].value, database: vertex.properties.database[0].value };
-            if (types.indexOf(vertex.label) === -1) {
-                types.push(vertex.label);
-            }
-        });
-        
-        // assign edges to links array
-        graph.edges.forEach(function (edge) {
-            links[edge.id] = { source: nodes[edge.outV], target: nodes[edge.inV], label: edge.label };
-        });
 
-
-        //make SVG graph, appends to svg object already created
-
-        newSVG(nodes, links);
+$(document).ready(function () {
+    fetch('/database', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({})
+    }).then(res => {
+        res.json().then(d => {
+            load_data(d.database);
+        })
     });
-}); 
+})
 
-*/
 
 function newSVG(nodes, links) {
 

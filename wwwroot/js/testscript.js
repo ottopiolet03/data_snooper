@@ -1,8 +1,6 @@
 
-let databases = [];
-let servers = [];
-let usernames = {};
-let passwords = {};
+let database;
+
 
 $(`#load_config`).on('click', event => {
     fetch('/load_configs').then(res => {
@@ -12,13 +10,7 @@ $(`#load_config`).on('click', event => {
         });
     });
 }); 
-
-$('#load_graph').on('click', event => {
-    console.log('g');
-    fetch('/').then(res => {
-        
-    });
-}); 
+ 
 
 $(`#add_config`).on('click', event => {
     //get input fields
@@ -39,9 +31,40 @@ $(`#add_config`).on('click', event => {
     });
 });
 
+$(`#remove_config`).on('click', event => {
+    //get input fields
+    let database = document.getElementById('database').value;
+
+    fetch('/remove_sql', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({ database: database})
+    }).then(function (res) {
+        res.json().then(d => console.log(d));
+    });
+});
+
+
 $('#clear').on('click', event => {
     $('#database').html('');
     $('#server').html('');
     $('#username').html('');
     $('#password').html('');
+});
+
+$('#load_graph').on('click', event => {
+    fetch('/', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({ database: document.getElementById('database').value})
+    }).then(res => {
+        window.location.replace(res.url + 'index.html');
+        
+    })
 });
