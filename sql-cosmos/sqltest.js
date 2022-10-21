@@ -16,16 +16,19 @@ function sqltest(database) {
         var connection_config;
         // Create connection to config database
         function create_config() {
-            connection_config = new Connection(sql_config);
-
+            try {
+                connection_config = new Connection(sql_config);
+            } catch (error) {
+                reject(error);
+            }
             connection_config.on("connect", err => {
                 if (err) {
-                    console.error(err.message);
+                    reject(err);
                 } else {
                     //after connection is made, make and send request
                     var request = new Request(`SELECT * FROM [dbo].[configs] WHERE DatabaseName = '${selected_database}'`,
                         (err, rowCount) => {
-                            if (err) { console.error(err) }
+                            if (err) { reject(err) }
                             else {
                                 //after request is made, connect to chosen database
                                 connection_config.close();
@@ -47,9 +50,10 @@ function sqltest(database) {
                                     }
                                 };
                                 connection = new Connection(config);
+                               
                                 connection.on("connect", err => {
                                     if (err) {
-                                        console.error(err.message);
+                                        reject(err);
                                     } else {
                                         //after connection made, run queries
                                         queryDatabase();
@@ -91,7 +95,7 @@ function sqltest(database) {
         WHERE [TABLE_TYPE] IN('VIEW')`,
                 (err, rowCount) => {
                     if (err) {
-                        console.error(err.message);
+                        reject(err);
                     } else {
                         console.log(`${rowCount} row(s) returned`);
 
@@ -119,7 +123,7 @@ function sqltest(database) {
         WHERE [TABLE_TYPE] IN('BASE TABLE')`,
                 (err, rowCount) => {
                     if (err) {
-                        console.error(err.message);
+                        reject(err);
                     } else {
                         console.log(`${rowCount} row(s) returned`);
                         //console.log(nodes);
@@ -148,7 +152,7 @@ function sqltest(database) {
                             INNER JOIN sys.objects o on  o.name=re.referenced_entity_name`,
                     (err, rowCount) => {
                         if (err) {
-                            console.error(err.message);
+                            reject(err);
                         } else {
                             console.log(`${rowCount} row(s) returned`);
                             if (node_queue.length > 0) {

@@ -7,43 +7,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Data Snooper </title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="css/style2.css">
-
 </head>
-<body>
 
+<body>
     <!---Header Section-->
 
     <header class="header">
 
         <h1 id="logo" onclick="location.reload()">Data Snooper </h1>
         <meta http-equiv="refresh" content="Onclick">
-        <nav class="topnav">
-            <a id="add_config">ADD</a>
-            <a id="clear_inputs">CLEAR</a>
-        </nav>
 
     </header>
 
     <div class="main">
         <div class="config-container">
-            <form id="config">
-                <label for="server">Server: </label>
-                <input id="server_input" type="text"/>
-                <label for="database">Database: </label>
-                <input id="database_input" type="text"/>
-                <label for="username">Username: </label>
-                <input type="text" id="username_input"/>
-                <label for="password">password: </label>
-                <input type="text" id="password_input"/>
+            <label for="server">Server: </label>
+            <input id="server_input" type="text" />
+            <label for="database">Database: </label>
+            <input id="database_input" type="text" />
+            <label for="username">Username: </label>
+            <input type="text" id="username_input" />
+            <label for="password">Password: </label>
+            <input type="text" id="password_input" />
 
-            </form>
+            <button id="add_config" class="config_button">ADD</button>
+            <button id="clear_inputs" clsas="config_button">CLEAR</button>
         </div>
-
-        <button id="table_add" class="Add table_button">ADD</button>
-        <button id="table_load" class="Load table_button">LOAD</button>
-        <button id="table_delete" class="Delete table_button">DELETE</button>
         <div class="table-div">
             <table id="data-table">
                 <tbody>
@@ -56,6 +46,11 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div id="table_buttons">
+            <!--><button id="table_add" class="Add table_button">ADD</button>-->
+            <button id="table_load" class="Load table_button">LOAD</button>
+            <button id="table_delete" class="Delete table_button">DELETE</button>
         </div>
     </div>
     <script src="js/testscript.js"></script>

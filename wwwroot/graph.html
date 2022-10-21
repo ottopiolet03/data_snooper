@@ -9,8 +9,9 @@
     <script src="https://d3js.org/d3.v3.min.js"></script>
    
 </head>
-    <body>
-        <div class="topnav">
+<body>
+    <header class="header">
+        <h1 id="logo" onclick="location.reload()">Data Snooper </h1>
             <div class="nav_element" id="search_type">
                 <select name="search_type_input" id="search_drop_down">
                     <option value="id">ID</option>
@@ -28,32 +29,38 @@
             </button>
             <button onclick="location.reload()" class="nav_element">
                 Refresh
-            </button>   
+            </button>
             <button class="nav_element" id="load">
                 Load
             </button>
             <div class="nav_element" id="database_names">
                 <select name="database_name_input" id="database_drop_down"></select>
             </div>
-        </div>
-        <script src="js/script.js"></script>
-        <div class="detail_display">
-            <div class="row">
-                <div class="column headers">ID</div>
-                <div class="column headers">Database</div>
-                <div class="column headers">Type</div>
-                <div class="column headers">Schema</div>
-                <div class="column headers">Last Accessed</div>
+            <button class="nav_element" id="back_button">
+                Back
+            </button>
+    </header>
+    <div class="topnav">
+        
+    </div>
+    <script src="js/script.js"></script>
+    <div class="detail_display">
+        <div class="row">
+            <div class="column headers">ID</div>
+            <div class="column headers">Database</div>
+            <div class="column headers">Type</div>
+            <div class="column headers">Schema</div>
+            <div class="column headers">Last Accessed</div>
 
 
-            </div>
-            <div class="row">
-                <div class="column data" id="node_id"> </div>
-                <div class="column data" id="node_database"> </div>
-                <div class="column data" id="node_label"> </div>
-                <div class="column data" id="node_schema"> </div>
-                <div class="column data" id="node_last_accessed"> </div>
-            </div>
         </div>
-    </body>
+        <div class="row">
+            <div class="column data" id="node_id"> </div>
+            <div class="column data" id="node_database"> </div>
+            <div class="column data" id="node_label"> </div>
+            <div class="column data" id="node_schema"> </div>
+            <div class="column data" id="node_last_accessed"> </div>
+        </div>
+    </div>
+</body>
 </html>

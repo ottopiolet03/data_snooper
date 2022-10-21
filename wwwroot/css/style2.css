@@ -3,11 +3,17 @@
 button {
     padding: 10px;
     margin: 10px;
+    background-color: rgb(159, 161, 163);
+    color: rgb(39,36,46);
+    text-align: center;
+}
+button:hover {
+    background-color: rgb(232, 227, 243);
 }
 
 :root {
-    --blue: #ADD8E6;
-    --black: #130f40;
+    --blue: #dce2e9;
+    --black: #101011;
     --light-color: #666;
     --box-shadow: 0 .5rem 1rem Orgba(0,0,0,.1);
     --border: .2rem solid rgba(0,0,0,.1);
@@ -17,13 +23,13 @@ button {
 
 * {
     font-family: 'Poppins', sans-serif;
+    color: rgb(228, 225, 225);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     outline: none;
     border: none;
     text-decoration: none;
-    text-transform: capitalize;
     transition: all .2s linear;
 }
 
@@ -39,9 +45,10 @@ html {
 }
 
 body {
-    background: rgb(201, 197, 197);
+    background-image: url("https://t3.ftcdn.net/jpg/02/25/56/84/360_F_225568493_JWK7MFIeZRYq32ksuZ6dMY43z338W2jg.jpg");
+    background-size: 1500px 800px;
     padding-top: 100px;
-}
+}   
 
 .header {
     position: fixed;
@@ -70,16 +77,16 @@ body {
 .main div {
     /*position: absolute;*/
     margin-left: 10px;
-    font-size:  large;
+    font-size: large;
 }
 
 #data-table {
-    margin-left: 215px;
+    margin-left: 300px;
     margin-right: Center;
     text-align: center;
     width: 600px;
-    
-    box-shadow: 1px 12px 12px -6px rgba(0,0,0,0.5);
+    margin-top: 3%;
+    box-shadow: 1px 12px 12px -6px rgba(248, 245, 245, 0.5);
 }
 
 
@@ -96,21 +103,24 @@ table.Center {
 td, th {
     border: 3px solid #797777;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
     border: 1px solid rgb(58, 57, 57);
-    height: 10px;
+    height: 20px;
 }
 
 th {
     background-color: rgb(82, 149, 236);
-    color:black;
+    color: rgb(240, 232, 232);
 }
 
 td {
     text-transform: lowercase;
 }
 
+tr {
+    background-color: grey; 
+}
 tr:hover {
     background-color: whitesmoke;
     transform: scale(0.5rem);
@@ -118,21 +128,39 @@ tr:hover {
 }
 
 .highlighted {
-    background-color: yellow;
+    background-color: darkblue;
 }
 
 .Add {
     background-color: rgb(159, 161, 163);
-    color: white;
+    color: rgb(39, 36, 46);
 }
+
 .table_button {
     background-color: rgb(159, 161, 163);
-    color: white;
+    color: rgb(39,36,46);
+    text-align: center;
 }
-.table_button:hover {
-    background-color: rgb(82, 149, 236);
-}
+
+
 
 input {
     font-size: medium;
+    color: black;
+    text-rendering:inherit;
+    appearance:textarea;
+    text-transform:none;
 }
+
+.background-image {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    filter: blur(50px);
+}
+
+.table-div {
+    height: 20em;
+    overflow: auto;
+}
+

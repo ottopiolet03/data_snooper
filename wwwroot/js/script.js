@@ -3,6 +3,7 @@ var width = window.innerWidth - 10,
     height = .8 * window.innerHeight,
     color = d3.scale.category10();
 
+document.forms.autocapitalize = false;
 // force layout setup
 var force = d3.layout.force()
     .charge(-500)
@@ -13,40 +14,49 @@ var nodes = {}, links = {}, types = ['TABLE', 'VIEW'];
 
 
 function load_data(database_name) {
-    
-    fetch('/sqltest', {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({ name: database_name })
-    }).then(function (res) {
-        res.json().then(d => {
-            data = { 'vertices': d.vertices._items, 'edges': d.edges._items };
-            let nodes1 = {};
-            let links1 = {};
-
-            //d3.json("data/graph-of-the-gods.json", function (error, graph) {
-            let graph = data;
-            // assign vertices to nodes array
-            graph.vertices.forEach(function (vertex) {
-                nodes1[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, schema: vertex.properties.schema[0].value, database: vertex.properties.database[0].value /*last_accessed: vertex.properties.last_accessed[0].value, schema: vertex.properties.schema[0].value */ };
-                if (types.indexOf(vertex.label) === -1) {
-                    types.push(vertex.label);
+    if (database_name == '') {
+        console.error('No database selected');
+    }
+    else {
+        fetch('/sqltest', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({ name: database_name })
+        }).then(function (res) {
+            res.json().then(d => {
+                if (d.code != undefined) {
+                    console.error(d);
                 }
-            });
-            // assign edges to links array
-            graph.edges.forEach(function (edge) {
-                links1[edge.id] = { source: nodes1[edge.outV], target: nodes1[edge.inV], label: edge.label };
-            });
-            //make SVG graph, appends to svg object already created
-            clear_svg();
-            nodes = nodes1;
-            links = links1;
-            newSVG(nodes1, links1);
-        });
-    }).catch(res => console.log(res));
+                else {
+                    data = { 'vertices': d.vertices._items, 'edges': d.edges._items };
+                    let nodes1 = {};
+                    let links1 = {};
+
+                    //d3.json("data/graph-of-the-gods.json", function (error, graph) {
+                    let graph = data;
+                    // assign vertices to nodes array
+                    graph.vertices.forEach(function (vertex) {
+                        nodes1[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, schema: vertex.properties.schema[0].value, database: vertex.properties.database[0].value /*last_accessed: vertex.properties.last_accessed[0].value, schema: vertex.properties.schema[0].value */ };
+                        if (types.indexOf(vertex.label) === -1) {
+                            types.push(vertex.label);
+                        }
+                    });
+                    // assign edges to links array
+                    graph.edges.forEach(function (edge) {
+                        links1[edge.id] = { source: nodes1[edge.outV], target: nodes1[edge.inV], label: edge.label };
+                    });
+                    //make SVG graph, appends to svg object already created
+                    clear_svg();
+                    nodes = nodes1;
+                    links = links1;
+                    newSVG(nodes1, links1);
+                }
+            }).catch(err => console.error(err));
+        }).catch(err => console.error(err));
+    }
 };
 
 
@@ -55,8 +65,9 @@ $('#load').on('click', event => {
     var database_name = document.getElementById('database_drop_down').value;
     load_data(database_name);
 });
-
-
+$('#back_button').on('click', event => {
+    window.location.replace('/index.html');
+})
 
 // setup svg div
 var svg = d3.select("body").append("svg")
