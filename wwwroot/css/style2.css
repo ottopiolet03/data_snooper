@@ -89,16 +89,13 @@ body {
     box-shadow: 1px 12px 12px -6px rgba(248, 245, 245, 0.5);
 }
 
-
-
-table.Center {
-    position: Center;
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    border-spacing: 50px;
-    text-align: Center;
+#table_and_buttons {
+    display: flex;
+    align-items: center;
+    justify-content:normal;
 }
+
+
 
 td, th {
     border: 3px solid #797777;

@@ -1,6 +1,8 @@
 
 * {
-    background: #333;
+    background-image: url("https://t3.ftcdn.net/jpg/02/25/56/84/360_F_225568493_JWK7MFIeZRYq32ksuZ6dMY43z338W2jg.jpg");
+    background-size: 1500px 800px;
+    padding-top: 100px;
 }
 
 
@@ -10,6 +12,13 @@
     stroke-width: 1.5px;
 }
 
+.background-image {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    filter: blur(50px);
+}
+
 .parent {
     fill: none;
     stroke: #666;
@@ -17,7 +26,7 @@
 }
 
 circle {
-    stroke: #333;
+    stroke: #000000;
     stroke-width: 1.5px;
     filter: brightness(130%);
 }
@@ -28,7 +37,11 @@ circle {
 
 textarea {
     background: white;
-    color: black;
+    color: white;
+}
+
+.node-label {
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 text {
@@ -66,36 +79,21 @@ text.link-label {
     color: white;
     border: 1px solid white;
 }
-.search_input::placeholder {
-    color: #f00;
+#search_input::placeholder {
+    color: white;
 }
-input{
+#search_input {
     color: white;
 }
 
 /* Add a black background color to the top navigation */
-.topnav {
-    background-color: #333;
-    overflow: hidden;
-    /*height: 70px;*/
-    display: inline;
-}
-.topnav div {
-    background: #808080;
-}
-.topnav button {
-    background: #808080;
-}
-.topnav button:hover {
-    background-color: #ddd;
-    color: black;
-}
+
     
 select {
     color: white;
 }
 option {
-    color:white;
+    color:black;
 }
 
     /* Style the links inside the navigation bar */
@@ -110,15 +108,13 @@ option {
 
 /* Change the color of links on hover */
 .nav_element:hover {
-    background-color: #ddd;
+    background: border-box;
+    background-color: white;
     color: black;
 }
 
 /* Add a color to the active/current link */
-.nav_element.active {
-    background-color: #04AA6D;
-    color: white;
-}
+
 
 
 
@@ -157,6 +153,7 @@ button {
     transition: all .2s linear;
 }
 #logo {
+    background: border-box; 
     background-color: rgb(82, 149, 236);
 }
 #logo:hover {
@@ -173,7 +170,8 @@ html {
 body {
     background-image: url("https://t3.ftcdn.net/jpg/02/25/56/84/360_F_225568493_JWK7MFIeZRYq32ksuZ6dMY43z338W2jg.jpg");
     background-size: 1500px 800px;
-    padding-top: 100px;
+    padding-top: 110px;
+    padding-bottom: 10px;
 }
 
 .header {
@@ -199,7 +197,6 @@ body {
 
 #data-table {
     margin-left: 300px;
-    margin-right: Center;
     text-align: center;
     width: 600px;
     margin-top: 3%;
@@ -208,7 +205,7 @@ body {
 
 
 
-table.Center {
+table {
     position: Center;
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -249,10 +246,6 @@ tr {
     background-color: darkblue;
 }
 
-.Add {
-    background-color: rgb(159, 161, 163);
-    color: rgb(39, 36, 46);
-}
 
 .table_button {
     background-color: rgb(159, 161, 163);

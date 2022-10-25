@@ -1,6 +1,6 @@
 
-var width = window.innerWidth - 10,
-    height = .8 * window.innerHeight,
+var width = window.innerWidth - 200,
+    height = .6 * window.innerHeight,
     color = d3.scale.category10();
 
 document.forms.autocapitalize = false;
@@ -11,7 +11,7 @@ var force = d3.layout.force()
     .size([width, height]);
 
 var nodes = {}, links = {}, types = ['TABLE', 'VIEW'];
-
+var r = 30;
 
 function load_data(database_name) {
     if (database_name == '') {
@@ -146,10 +146,11 @@ function newSVG(nodes, links) {
         .rangePoints([0, 5]);
 
     // circle displayed for nodes
+    
     var circle = svg.append("g").selectAll("circle")
         .data(force.nodes())
         .enter().append("circle")
-        .attr("r", 30)
+        .attr("r", r)
         .style("fill", function (d) { return color(o(d.type)); })
         .attr("id", data => data.id)
         .attr("name", "circle")
@@ -162,7 +163,7 @@ function newSVG(nodes, links) {
         //highlight when hovered
         .on("mouseout", function () {
             d3.select(this)
-                .style("stroke", "#666");
+                .style("stroke", "#000000");
         })
         .on("click", function () {
             //get data
@@ -185,7 +186,9 @@ function newSVG(nodes, links) {
             document.getElementById('node_last_accessed').insertAdjacentText('afterbegin', node_last_accessed + " days ago");
             document.getElementById('node_schema').insertAdjacentText('afterbegin', node_schema);
             document.getElementById('node_label').insertAdjacentText('afterbegin', node_label);
+
         });
+
 
     circle.append("title")
         .text(function (d) { return d.type; });
@@ -201,21 +204,22 @@ function newSVG(nodes, links) {
 
     // attach transformation attributes to nodes and links
     function tick() {
-        path.attr("d", linkArrow);
-        label.attr("transform", linkLabel);
         circle.attr("transform", transform);
+        path.attr("d", linkArrow);
+        label.attr("transform", linkLabel);      
+        
         text.attr("transform", transform);
     }
 
     function linkArrow(d) {
-        return "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y;
+        return "M" + Math.max(r, Math.min(width - r, d.source.x)) + "," + Math.max(r, Math.min(height - r, d.source.y)) + "L" + Math.max(r, Math.min(width - r, d.target.x)) + "," + Math.max(r, Math.min(height - r, d.target.y));
     }
 
     function linkLabel(d) {
-        var x = (d.source.x + d.target.x) / 2,
-            y = (d.source.y + d.target.y) / 2;
-        var dx = d.target.x - x,
-            dy = d.target.y - y;
+        var x = (Math.max(r, Math.min(width - r, d.source.x)) + Math.max(r, Math.min(width - r, d.target.x))) / 2,
+            y = (Math.max(r, Math.min(width - r, d.source.y)) + Math.max(r, Math.min(width - r, d.target.y))) / 2;
+        var dx = Math.max(r, Math.min(width - r, d.target.x)) - x,
+            dy = Math.max(r, Math.min(width - r, d.target.y)) - y;
         var theta = Math.atan2(dy, dx);
         theta *= 180.0 / Math.PI;
 
@@ -223,7 +227,7 @@ function newSVG(nodes, links) {
     }
 
     function transform(d) {
-        return "translate(" + d.x + "," + d.y + ")";
+        return "translate(" + Math.max(r, Math.min(width - r, d.x)) + "," + Math.max(r, Math.min(height - r, d.y)) + ")";
     }
 
 };
@@ -365,7 +369,7 @@ search_box.addEventListener("keydown", function (e) {
         highlightNodes(e, search_box.value, search_input.value);
     }
     else if (e.code === 'Enter' && search_box.value == "") {
-        d3.selectAll('circle').attr('class', null);
+        d3.selectAll('circle').attr('class', 'bright');
     }
 });
 var clear_button = document.getElementById('clear_button');

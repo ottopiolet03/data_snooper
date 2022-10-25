@@ -12,55 +12,54 @@
 <body>
     <header class="header">
         <h1 id="logo" onclick="location.reload()">Data Snooper </h1>
-            <div class="nav_element" id="search_type">
-                <select name="search_type_input" id="search_drop_down">
-                    <option value="id">ID</option>
-                    <option value="type">Type</option>
-                    <option value="schema">Schema</option>
-                    <option value="last_accessed">Days since Last Accessed</option>
-                    <option value="database">Database</option>
-                </select>
-            </div>
-            <div class="nav_element">
-                <a><input type="text" id="search_input" placeholder="enter search" /></a>
-            </div>
-            <button id="clear_button" class="nav_element">
-                Clear
-            </button>
-            <button onclick="location.reload()" class="nav_element">
-                Refresh
-            </button>
-            <button class="nav_element" id="load">
-                Load
-            </button>
-            <div class="nav_element" id="database_names">
-                <select name="database_name_input" id="database_drop_down"></select>
-            </div>
-            <button class="nav_element" id="back_button">
-                Back
-            </button>
+        <div class="nav_element" id="search_type">
+            <select name="search_type_input" id="search_drop_down">
+                <option value="id">ID</option>
+                <option value="type">Type</option>
+                <option value="schema">Schema</option>
+                <option value="last_accessed">Days since Last Accessed</option>
+                <option value="database">Database</option>
+            </select>
+        </div>
+        <div class="nav_element">
+            <a><input type="text" id="search_input" placeholder="enter search" /></a>
+        </div>
+        <button id="clear_button" class="nav_element">
+            Clear
+        </button>
+        <button onclick="location.reload()" class="nav_element">
+            Refresh
+        </button>
+        <button class="nav_element" id="load">
+            Load
+        </button>
+        <div class="nav_element" id="database_names">
+            <select name="database_name_input" id="database_drop_down"></select>
+        </div>
+        <button class="nav_element" id="back_button">
+            Back
+        </button>
     </header>
-    <div class="topnav">
-        
-    </div>
     <script src="js/script.js"></script>
-    <div class="detail_display">
-        <div class="row">
-            <div class="column headers">ID</div>
-            <div class="column headers">Database</div>
-            <div class="column headers">Type</div>
-            <div class="column headers">Schema</div>
-            <div class="column headers">Last Accessed</div>
-
-
-        </div>
-        <div class="row">
-            <div class="column data" id="node_id"> </div>
-            <div class="column data" id="node_database"> </div>
-            <div class="column data" id="node_label"> </div>
-            <div class="column data" id="node_schema"> </div>
-            <div class="column data" id="node_last_accessed"> </div>
-        </div>
+    <div class="table-div">
+        <table id="data-table">
+            <tbody>
+                <tr>
+                    <th>ID</th>
+                    <th>Database</th>
+                    <th>Type</th>
+                    <th>Schema</th>
+                    <th >Last Accessed</th>
+                </tr>
+                <tr>
+                    <td id="node_id"> </td>
+                    <td id="node_database"> </td>
+                    <td id="node_label"> </td>
+                    <td id="node_schema"> </td>
+                    <td id="node_last_accessed"> </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
