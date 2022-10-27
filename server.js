@@ -57,6 +57,12 @@ app.post('/remove_sql', function (req, res) {
     cosmos_func.remove_cosmos(database, server);
     res.send(JSON.stringify({ database: database, server: server }));
 });
+app.post('/remove_cosmos', function (req, res) {
+    let body = req.body;
+    let database = body.database;
+    cosmos_func.remove_cosmos(database);
+    res.send(JSON.stringify({ database: database}));
+});
 
 app.post('/sqltest', jsonParser, function (request, result, next) {
         var data = sqltest.load_data(request.body.name);

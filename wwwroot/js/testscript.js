@@ -60,7 +60,7 @@ $(`#add_config`).on('click', event => {
         body: JSON.stringify({ database: database, server: server, username: username, password: password })
     }).then(function (res) {
         res.json().then(d => console.log(d));
-
+        all_configs[database] = { database: database, server: server, username: username, password: password };
         let table = $(`tbody`);
         let output = `<tr class="data" id="${server}.${database}">
                                 <td>${server}</td>
@@ -96,6 +96,7 @@ $(`#table_delete`).on('click', event => {
         body: JSON.stringify({ database: database, server: server })
     }).then(function (res) {
         res.json().then(d => {
+            delete all_configs[database];
             document.getElementById(`${d.server}.${d.database}`).remove();
             current_database = "";
             current_server = "";

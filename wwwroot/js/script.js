@@ -28,7 +28,12 @@ function load_data(database_name) {
         }).then(function (res) {
             res.json().then(d => {
                 if (d.code != undefined) {
-                    console.error(d);
+                    var error_text = `<div class="alert">
+                                         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                                             No valid database was selected
+                                      </div>`;
+
+                    $('#error_box').append(error_text);
                 }
                 else {
                     data = { 'vertices': d.vertices._items, 'edges': d.edges._items };
@@ -66,7 +71,17 @@ $('#load').on('click', event => {
     load_data(database_name);
 });
 $('#back_button').on('click', event => {
+    var database_name = document.getElementById('database_drop_down').value;
+    fetch('/remove_cosmos', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({ database: database_name})
+    });
     window.location.replace('/index.html');
+    
 })
 
 // setup svg div

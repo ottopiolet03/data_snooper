@@ -18,7 +18,10 @@ button:hover {
     --box-shadow: 0 .5rem 1rem Orgba(0,0,0,.1);
     --border: .2rem solid rgba(0,0,0,.1);
     --outline: .1rem solid rgba(0,0,0,.1);
-    --outline-hover: .2rem solid
+    --outline-hover: .2rem solid;
+    --primary: rgb(19, 171, 220);
+    --secondary: rgb(72,72,72);
+    --white: rgb(237,237,237);
 }
 
 * {

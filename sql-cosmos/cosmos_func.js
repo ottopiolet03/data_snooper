@@ -1,7 +1,7 @@
 
 
 
-function remove_database(database, server) {
+function remove_database(database) {
     const Gremlin = require('gremlin');
     const config2 = require("./config/cosmos_config");
     const authenticator = new Gremlin.driver.auth.PlainTextSaslAuthenticator(`/dbs/${config2.database}/colls/${config2.collection}`, config2.primaryKey)
@@ -15,7 +15,7 @@ function remove_database(database, server) {
             mimeType: "application/vnd.gremlin-v2.0+json"
         }
     );
-    client.open().then(client.submit(`g.V().has('database', '${database}').drop()`).then(client.close().then(console.log('dropped'))));
+    client.open().then(client.submit(`g.V().has('database', '${database}').drop()`).then(client.close().then(console.log(database + ' dropped')))).catch(err=> console.error(err));
 }
 
 module.exports = {

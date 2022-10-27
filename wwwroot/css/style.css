@@ -1,22 +1,18 @@
 
-* {
-    background-image: url("https://t3.ftcdn.net/jpg/02/25/56/84/360_F_225568493_JWK7MFIeZRYq32ksuZ6dMY43z338W2jg.jpg");
-    background-size: 1500px 800px;
-    padding-top: 100px;
+:root {
+    --primary: rgb(19, 171, 220);
+    --secondary: rgb(72,72,72);
+    --white: rgb(237,237,237);
 }
+/*to use:      var(--primary)        */
+
+
 
 
 .child {
     fill: none;
     stroke: #666;
     stroke-width: 1.5px;
-}
-
-.background-image {
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    filter: blur(50px);
 }
 
 .parent {
@@ -138,7 +134,7 @@ button {
     --box-shadow: 0 .5rem 1rem Orgba(0,0,0,.1);
     --border: .2rem solid rgba(0,0,0,.1);
     --outline: .1rem solid rgba(0,0,0,.1);
-    --outline-hover: .2rem solid
+    --outline-hover: .2rem solid;
 }
 
 * {
@@ -276,4 +272,30 @@ input {
 }
 
 
+/* The alert message box */
+.alert {
+    padding: 20px;
+    background: border-box;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+    font-size: 25px;
+}
 
+/* The close button */
+.closebtn {
+    background: inherit;
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    /* When moving the mouse over the close button */
+    .closebtn:hover {
+        color: black;
+    }
