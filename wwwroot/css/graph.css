@@ -1,0 +1,301 @@
+
+:root {
+    --primary: rgb(19, 171, 220);
+    --secondary: rgb(72,72,72);
+    --white: rgb(237,237,237);
+}
+/*to use:      var(--primary)        */
+
+
+
+
+.child {
+    fill: none;
+    stroke: #666;
+    stroke-width: 1.5px;
+}
+
+.parent {
+    fill: none;
+    stroke: #666;
+    stroke-width: 1.5px;
+}
+
+circle {
+    stroke: #000000;
+    stroke-width: 1.5px;
+    filter: brightness(130%);
+}
+
+.dim {
+    filter: brightness(40%);
+}
+
+textarea {
+    background: white;
+    color: white;
+}
+
+.node-label {
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+text {
+    font: 12px sans-serif;
+    font-weight: bolder;
+    pointer-events: none;
+    text-anchor: middle;
+    filter: brightness(80%)
+}
+
+text.node-label {
+    fill: #fff;
+}
+
+text.link-label {
+    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
+
+.detail-display {
+    color: white;
+}
+
+.row {
+    display: flex;
+}
+.column {
+    flex: 50%;
+    padding: 10px;
+}
+.headers {
+    color: white;
+    border: solid white;
+}
+.data {
+    color: white;
+    border: 1px solid white;
+}
+#search_input::placeholder {
+    color: black;
+}
+#search_input {
+    color: black;
+}
+
+/* Add a black background color to the top navigation */
+
+    
+select {
+    color: black;
+}
+option {
+    color:black;
+}
+
+    /* Style the links inside the navigation bar */
+.nav_element {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.nav_element:hover {
+    background: border-box;
+    background-color: white;
+    color: black;
+}
+
+/* Add a color to the active/current link */
+
+
+
+
+
+button {
+    padding: 10px;
+    margin: 10px;
+    background-color: rgb(159, 161, 163);
+    color: rgb(39,36,46);
+    text-align: center;
+}
+
+    button:hover {
+        background-color: rgb(232, 227, 243);
+    }
+
+:root {
+    --blue: #dce2e9;
+    --black: #101011;
+    --light-color: #666;
+    --box-shadow: 0 .5rem 1rem Orgba(0,0,0,.1);
+    --border: .2rem solid rgba(0,0,0,.1);
+    --outline: .1rem solid rgba(0,0,0,.1);
+    --outline-hover: .2rem solid;
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+    color: rgb(228, 225, 225);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    transition: all .2s linear;
+}
+#logo {
+    background: border-box; 
+    background-color: rgb(82, 149, 236);
+}
+#logo:hover {
+    color: white;
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding: 7rem;
+}
+
+body {
+    background-image: url("https://t3.ftcdn.net/jpg/02/25/56/84/360_F_225568493_JWK7MFIeZRYq32ksuZ6dMY43z338W2jg.jpg");
+    background-size: 1500px 800px;
+    padding-top: 110px;
+    padding-bottom: 10px;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 9%;
+    background: rgb(82, 149, 236);
+    box-shadow: var(--box-shadow);
+}
+
+
+.main div {
+    /*position: absolute;*/
+    margin-left: 10px;
+    font-size: large;
+}
+
+#data-table {
+    margin-left: 300px;
+    text-align: center;
+    width: 600px;
+    margin-top: 3%;
+    box-shadow: 1px 12px 12px -6px rgba(248, 245, 245, 0.5);
+}
+
+
+
+table {
+    position: Center;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    border-spacing: 50px;
+    text-align: Center;
+}
+
+td, th {
+    border: 3px solid #797777;
+    text-align: center;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid rgb(58, 57, 57);
+    height: 20px;
+}
+
+th {
+    background-color: rgb(82, 149, 236);
+    color: rgb(240, 232, 232);
+}
+
+td {
+    text-transform: lowercase;
+}
+
+tr {
+    background-color: grey;
+}
+
+    tr:hover {
+        background-color: whitesmoke;
+        transform: scale(0.5rem);
+        transition: transform 300ms ease-in;
+    }
+
+.highlighted {
+    background-color: darkblue;
+}
+
+
+.table_button {
+    background-color: rgb(159, 161, 163);
+    color: rgb(39,36,46);
+    text-align: center;
+}
+
+
+
+input {
+    font-size: medium;
+    color: black;
+    text-rendering: inherit;
+    appearance: textarea;
+    text-transform: none;
+}
+
+.background-image {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    filter: blur(50px);
+}
+
+.table-div {
+    height: 20em;
+    overflow: auto;
+}
+
+
+/* The alert message box */
+.alert {
+    padding: 20px;
+    background: border-box;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+    font-size: 25px;
+}
+
+/* The close button */
+.closebtn {
+    background: inherit;
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    /* When moving the mouse over the close button */
+    .closebtn:hover {
+        color: black;
+    }
