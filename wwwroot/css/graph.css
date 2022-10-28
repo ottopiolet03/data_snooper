@@ -103,11 +103,7 @@ option {
 }
 
 /* Change the color of links on hover */
-.nav_element:hover {
-    background: border-box;
-    background-color: white;
-    color: black;
-}
+
 
 /* Add a color to the active/current link */
 
@@ -119,12 +115,13 @@ button {
     padding: 10px;
     margin: 10px;
     background-color: var(--secondary);
-    color: rgb(39,36,46);
+    color: black;
     text-align: center;
 }
 
     button:hover {
-        background-color: rgb(232, 227, 243);
+        background-color: var(--third);
+        color: black;
     }
 
 :root {
@@ -155,7 +152,6 @@ button {
 
 html {
     font-size: 62.5%;
-    overflow-x: hidden;
     scroll-behavior: smooth;
     scroll-padding: 7rem;
 }
@@ -191,50 +187,39 @@ body {
 #data-table {
     margin-left: 300px;
     text-align: center;
-    width: 600px;
     margin-top: 3%;
     box-shadow: 1px 12px 12px -6px rgba(248, 245, 245, 0.5);
-}
-
-
-
-table {
-    position: Center;
-    font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 100%;
-    border-spacing: 50px;
-    text-align: Center;
+    height: 100%;
+    width: 50%;
+    border: 1px solid black;
 }
 
-td, th {
-    border: 3px solid #797777;
+
+#table-div {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#table-div, th, td {
+    border-collapse: collapse;
     text-align: center;
-    padding: 10px;
-    text-align: center;
-    border: 1px solid rgb(58, 57, 57);
-    height: 20px;
+    border: 1px solid black !important;
 }
 
 th {
-    background-color: var(--white);
-    color: black;
+    top: 0;
 }
 
-td {
-    text-transform: lowercase;
+#top_row {
+    border-top: hidden;
 }
 
-tr {
-    background-color: var(--third);
+thead {
+    border-bottom: 5px solid black !important;
 }
-
-    tr:hover {
-        background-color: whitesmoke;
-        transform: scale(0.5rem);
-        transition: transform 300ms ease-in;
-    }
-
 .highlighted {
     background-color: darkblue;
 }
@@ -265,7 +250,11 @@ input {
 
 .table-div {
     height: 20em;
-    overflow: auto;
+}
+tbody {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(234, 238, 243)
 }
 
 
@@ -296,3 +285,39 @@ input {
     .closebtn:hover {
         color: black;
     }
+
+
+.navbar-brand {
+    font-size: 2rem;
+    color: rgb(234, 238, 243);
+}
+
+    .navbar-brand:hover {
+        color: black;
+    }
+
+.nav-link {
+    margin-right: 10px;
+    margin-left: 10px;
+    color: rgb(234, 238, 243);
+    font-family: Rubik,sans-serif;
+    text-transform: uppercase;
+}
+
+    .nav-link:hover {
+        color: black;
+    }
+
+.main {
+    background: rgb(237,237,237);
+    background-size: cover;
+    height: 100vh;
+    background-position: 50% 50%;
+    width: 100%;
+}
+
+.navbar-expand-lg {
+    background: rgb(18,171,219);
+    height: 120%;
+    width: 100%;
+}

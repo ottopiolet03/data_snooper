@@ -13,11 +13,12 @@ function load_configs() {
             all_configs = d;
             for (let key in d) {
                 let table = $(`tbody`);
+                let password = "".padStart(d[key].password.length, '*');
                 let output = `<tr class="data" id="${d[key].server}.${d[key].database}">
                                 <td value="${d[key].server}" class="col-xs-3">${d[key].server}</td>
                                 <td class="database col-xs-3">${d[key].database}</td>
                                 <td class="col-xs-3">${d[key].username}</td>
-                                <td class="col-xs-3">${d[key].password}</td>
+                                <td class="col-xs-3" type="password">${password}</td>
                                 <td class="col-xs-6"><button class="btn load">Load</button></th>
                                 <td class="col-xs-6"><button class="btn delete">Delete</button></th>
                             </tr>`

@@ -66,10 +66,12 @@ function load_data(database_name) {
 
 
 $('#load').on('click', event => {
+    event.preventDefault();
     var database_name = document.getElementById('database_drop_down').value;
     load_data(database_name);
 });
 $('#back_button').on('click', event => {
+    event.preventDefault();
     var database_name = document.getElementById('database_drop_down').value;
     fetch('/remove_cosmos', {
         headers: {
@@ -379,6 +381,7 @@ function highlightNodes(e, input, search_type) {
 };
 
 search_box.addEventListener("keydown", function (e) {
+    e.preventDefault();
     if (e.code === 'Enter' && search_box.value != null && search_box.value != "") {
         highlightNodes(e, search_box.value, search_input.value);
     }
@@ -388,6 +391,7 @@ search_box.addEventListener("keydown", function (e) {
 });
 var clear_button = document.getElementById('clear_button');
 clear_button.addEventListener('click', function (e) {
+    e.preventDefault();
     document.getElementById('search_input').value = '';
     clear_svg();
     newSVG(nodes, links);

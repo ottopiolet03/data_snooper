@@ -25,22 +25,22 @@
                 <option value="database">Database</option>
             </select>
         </div>
-        <div class="nav_element">
-            <a><input type="text" id="search_input" placeholder="enter search" /></a>
+        <div class="input-group-sm nav_element">
+            <input type="text" id="search_input" placeholder="enter search" />
         </div>
-        <button id="clear_button" class="btn nav_element">
+        <button id="clear_button" class="btn-lg nav_element">
             Clear
         </button>
-        <button onclick="location.reload()" class="btn nav_element">
+        <button onclick="location.reload()" class="btn-lg nav_element">
             Refresh
         </button>
-        <button class="btn nav_element" id="load">
+        <button class="btn-lg nav_element" id="load">
             Load
         </button>
         <div class="nav_element" id="database_names">
             <select name="database_name_input" id="database_drop_down"></select>
         </div>
-        <button class="btn nav_element" id="back_button">
+        <button class="btn-lg nav_element" id="back_button">
             Back
         </button>
     </header>
@@ -48,7 +48,7 @@
     <script src="js/script.js"></script>
     <div class="table-div">
         <table id="data-table">
-            <tbody>
+            <tbody class="table-fixed">
                 <tr>
                     <th>ID</th>
                     <th>Database</th>
