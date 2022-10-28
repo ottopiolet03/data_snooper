@@ -3,7 +3,6 @@ var width = window.innerWidth - 200,
     height = .6 * window.innerHeight,
     color = d3.scale.category10();
 
-document.forms.autocapitalize = false;
 // force layout setup
 var force = d3.layout.force()
     .charge(-500)

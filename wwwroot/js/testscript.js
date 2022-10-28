@@ -1,9 +1,6 @@
 
-
-let configs; 
+ 
 let all_configs;
-let current_database ="";
-let current_server = "";
 
 $(document).ready(function () {
     load_configs();
@@ -17,22 +14,18 @@ function load_configs() {
             for (let key in d) {
                 let table = $(`tbody`);
                 let output = `<tr class="data" id="${d[key].server}.${d[key].database}">
-                                <td>${d[key].server}</td>
-                                <td class="database">${d[key].database}</td>
-                                <td>${d[key].username}</td>
-                                <td>${d[key].password}</td>
+                                <td value="${d[key].server}" class="col-xs-3">${d[key].server}</td>
+                                <td class="database col-xs-3">${d[key].database}</td>
+                                <td class="col-xs-3">${d[key].username}</td>
+                                <td class="col-xs-3">${d[key].password}</td>
+                                <td class="col-xs-6"><button class="btn load">Load</button></th>
+                                <td class="col-xs-6"><button class="btn delete">Delete</button></th>
                             </tr>`
                 $(output).appendTo(table);
             }
-            $('.data').on('click', function (e) {
-                let row = $(e.target).closest('tr');
-                current_database = row.children()[1].innerHTML;
-                current_server =row.children()[0].innerHTML;
-                configs = Object.fromEntries(Object.entries(all_configs).filter((key, value) => key[1].server == current_server));
-                $('tr').removeClass('highlighted');
-                row.attr('class', 'data highlighted');
-
-            });
+            
+            add_delete_func();
+            add_load_func();
         });
     });
 }
@@ -45,6 +38,7 @@ function clear_inputs() {
 }
 
 $(`#add_config`).on('click', event => {
+    event.preventDefault();
     //get input fields
     let database = document.getElementById('database_input').value;
     let server = document.getElementById('server_input').value;
@@ -63,68 +57,67 @@ $(`#add_config`).on('click', event => {
         all_configs[database] = { database: database, server: server, username: username, password: password };
         let table = $(`tbody`);
         let output = `<tr class="data" id="${server}.${database}">
-                                <td>${server}</td>
-                                <td class="database">${database}</td>
-                                <td>${username}</td>
-                                <td>${password}</td>
+                                <td class="col-xs-3">${server}</td>
+                                <td class="database col-xs-3">${database}</td>
+                                <td class="col-xs-3">${username}</td>
+                                <td class="col-xs-3">${password}</td>
+                                <td class="col-xs-6"><button class="btn load">Load</button></th>
+                                <td class="col-xs-6"><button class="btn delete">Delete</button></th>
                             </tr>`
         $(output).appendTo(table);
 
-        $('.data').on('click', function (e) {
-            let row = $(e.target).closest('tr');
-            current_database = row.children()[1].innerHTML;
-            current_server = row.children()[0].innerHTML;
-            configs = Object.fromEntries(Object.entries(all_configs).filter((key, value) => key[1].server == current_server));
-            $('tr').removeClass('highlighted');
-            row.attr('class', 'data highlighted');
-
-        });
+        add_delete_func();
+        add_load_func();
         clear_inputs(); 
     });
 });
 
-$(`#table_delete`).on('click', event => {
-    //get input fields
-    let database = current_database;
-    let server = current_server;
-    fetch('/remove_sql', {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        method: "POST",
-        body: JSON.stringify({ database: database, server: server })
-    }).then(function (res) {
-        res.json().then(d => {
-            delete all_configs[database];
-            document.getElementById(`${d.server}.${d.database}`).remove();
-            current_database = "";
-            current_server = "";
+function add_delete_func() {
+    $(`.delete`).on('click', event => {
+        //get input fields
+        let row = $(event.target).closest('tr');
+        let database = row.children()[1].innerHTML;
+        let server = row.children()[0].innerHTML;
+        fetch('/remove_sql', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({ database: database, server: server })
+        }).then(function (res) {
+            res.json().then(d => {
+                delete all_configs[database];
+                document.getElementById(`${d.server}.${d.database}`).remove();
+            });
         });
     });
-});
+}
 
 
 $('#clear_inputs').on('click', event => {
+    event.preventDefault();
     clear_inputs();
     
 });
 
-$('#table_load').on('click', event => {
-    if (current_database == "" || current_server == "") {
-        console.error('No database selected');
-    }
-    else {
+function add_load_func() {
+    $('.load').on('click', event => {
+        let row = $(event.target).closest('tr');
+        let database = row.children()[1].innerHTML;
+        let server = row.children()[0].innerHTML;
+        let configs = Object.fromEntries(Object.entries(all_configs).filter((key, value) => key[1].server == server));
+
         fetch('/load', {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ database: current_database, server: current_server, configs: configs })
+            body: JSON.stringify({ database: database, server: server, configs: configs })
         }).then(res => {
             window.location.replace('/graph.html');
         })
-    }
-});
+    });
+}
 

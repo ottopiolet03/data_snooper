@@ -2,7 +2,7 @@
 :root {
     --primary: rgb(19, 171, 220);
     --secondary: rgb(72,72,72);
-    --white: rgb(237,237,237);
+    --third: rgb(237,237,237);
 }
 /*to use:      var(--primary)        */
 
@@ -118,7 +118,7 @@ option {
 button {
     padding: 10px;
     margin: 10px;
-    background-color: rgb(159, 161, 163);
+    background-color: var(--secondary);
     color: rgb(39,36,46);
     text-align: center;
 }
@@ -139,7 +139,7 @@ button {
 
 * {
     font-family: 'Poppins', sans-serif;
-    color: rgb(228, 225, 225);
+    color: black;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -148,10 +148,7 @@ button {
     text-decoration: none;
     transition: all .2s linear;
 }
-#logo {
-    background: border-box; 
-    background-color: rgb(82, 149, 236);
-}
+
 #logo:hover {
     color: white;
 }
@@ -164,7 +161,7 @@ html {
 }
 
 body {
-    background-image: url("https://t3.ftcdn.net/jpg/02/25/56/84/360_F_225568493_JWK7MFIeZRYq32ksuZ6dMY43z338W2jg.jpg");
+    background-color: var(--white);
     background-size: 1500px 800px;
     padding-top: 110px;
     padding-bottom: 10px;
@@ -180,7 +177,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 2rem 9%;
-    background: rgb(82, 149, 236);
+    background: var(--primary);
     box-shadow: var(--box-shadow);
 }
 
@@ -220,8 +217,8 @@ td, th {
 }
 
 th {
-    background-color: rgb(82, 149, 236);
-    color: rgb(240, 232, 232);
+    background-color: var(--white);
+    color: black;
 }
 
 td {
@@ -229,7 +226,7 @@ td {
 }
 
 tr {
-    background-color: grey;
+    background-color: var(--third);
 }
 
     tr:hover {
@@ -244,7 +241,7 @@ tr {
 
 
 .table_button {
-    background-color: rgb(159, 161, 163);
+    background-color: var(--primary);
     color: rgb(39,36,46);
     text-align: center;
 }

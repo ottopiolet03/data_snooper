@@ -1,62 +1,81 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Data Snooper on JS</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <title>Data Snooper </title>
     <link rel="stylesheet" href="css/index.css">
+    <title>DATA SNOOPER</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+
 </head>
-
 <body>
-    <!---Header Section-->
-
-    <header class="header">
-
-        <h1 id="logo" onclick="location.reload()">Data Snooper </h1>
-        <meta http-equiv="refresh" content="Onclick">
-
-    </header>
-
-    <div class="main">
-        <div class="config-container">
-            <label for="server">Server: </label>
-            <input id="server_input" type="text" />
-            <label for="database">Database: </label>
-            <input id="database_input" type="text" />
-            <label for="username">Username: </label>
-            <input type="text" id="username_input" />
-            <label for="password">Password: </label>
-            <input type="text" id="password_input" />
-
-            <button id="add_config" class="btn config_button"><i class="fa fa-plus"></i></button>
-            <button id="clear_inputs" class="btn config_button"><i class="fa fa-trash"></i></button>
-        </div>
-        <div id="table_and_buttons" class="center">
-            <div class="table-div">
-                <table id="data-table">
-                    <tbody>
-                        <tr>
-                            <th>Server</th>
-                            <th id="id">Database</th>
-                            <th>Username</th>
-                            <th>Password</th>
-                            <!--<td data-label="#"><a href="Load" class="btn">Load</a></td>-->
-                        </tr>
-                    </tbody>
-                </table>    
-            </div>
-            <div id="table_buttons">
-                <button id="table_load" class="Load table_button">LOAD</button>
-                <button id="table_delete" class="Delete table_button">DELETE</button>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand">DATA SNOOPER</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0">
+                </ul>
             </div>
         </div>
-    </div>
+    </nav>
+    <div id="error_ box"></div>
+    <section class="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg">
+                    <div class="test">
+                        <form>
+                            <label for="server">Server: </label>
+                            <input id="server_input" type="text" />
+                            <label for="database">Database: </label>
+                            <input id="database_input" type="text" />
+                            <label for="username">Username: </label>
+                            <input type="text" id="username_input" />
+                            <label for="password">Password: </label>
+                            <input type="password" id="password_input" />
+                            <button id="add_config" class="btn config_button"><i class="fa fa-plus"></i></button>
+                            <button id="clear_inputs" class="btn config_button"><i class="fa fa-trash"></i></button>
+
+                        </form>
+
+                        <div id="table-div" class="Containerone">
+                            <table class="table table-fixed">
+                                <thead>
+                                    <tr>
+
+                                        <th class="col-xs-3">SERVER</th>
+                                        <th class="col-xs-3">DATABASE</th>
+                                        <th class="col-xs-3">USERNAME</th>
+                                        <th class="col-xs-3">PASSWORD</th>
+                                        <th class="col-xs-6">LOAD</th>
+                                        <th class="col-xs-6">DELETE</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <p>Footer</p>
+                    </div>
+                </div>
+            </div>
+    </section>
     <script src="js/testscript.js"></script>
 </body>
 </html>

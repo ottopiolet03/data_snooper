@@ -7,6 +7,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/graph.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
 
@@ -26,19 +28,19 @@
         <div class="nav_element">
             <a><input type="text" id="search_input" placeholder="enter search" /></a>
         </div>
-        <button id="clear_button" class="nav_element">
+        <button id="clear_button" class="btn nav_element">
             Clear
         </button>
-        <button onclick="location.reload()" class="nav_element">
+        <button onclick="location.reload()" class="btn nav_element">
             Refresh
         </button>
-        <button class="nav_element" id="load">
+        <button class="btn nav_element" id="load">
             Load
         </button>
         <div class="nav_element" id="database_names">
             <select name="database_name_input" id="database_drop_down"></select>
         </div>
-        <button class="nav_element" id="back_button">
+        <button class="btn nav_element" id="back_button">
             Back
         </button>
     </header>
@@ -52,7 +54,7 @@
                     <th>Database</th>
                     <th>Type</th>
                     <th>Schema</th>
-                    <th >Last Accessed</th>
+                    <th>Last Accessed</th>
                 </tr>
                 <tr>
                     <td id="node_id"> </td>
