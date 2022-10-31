@@ -197,9 +197,9 @@ function sqltest(database) {
             const result = logsQueryClient.queryWorkspace(
                 workspaceId,
                 `AzureDiagnostics
-                  | where statement_s  has "select" and statement_s has "from" and statement_s !has "sys." and statement_s !has "INFORMATION_SCHEMA" 
+                  | where statement_s  has "select" and statement_s has "from" and statement_s !has "sys." and statement_s !has "INFORMATION_SCHEMA" and database_name_s has "${database}"
                   | project statement_s, TimeGenerated, server_instance_name_s, database_name_s, schema_name_s`,  //removed has "VIEW"
-                { duration: AzureMonitorQuery.Durations.oneDay }
+                { duration: AzureMonitorQuery.Durations.oneMonth }
 
             ).then(result => {
 
@@ -221,7 +221,6 @@ function sqltest(database) {
                     let full_name = begin_name.substring(0, index_end_name);
                     let database_name = query[3];
                     let full_table_name = database_name + '.' + full_name;
-
                     
                     let index = nodes.findIndex(function (item) {
                         return item.FULL_TABLE_NAME == full_table_name;
@@ -239,7 +238,7 @@ function sqltest(database) {
                 }
                 for (let node in nodes) {
                     if (nodes[node].LAST_ACCESSED == undefined) {
-                        nodes[node].LAST_ACCESSED = '>30';
+                        nodes[node].LAST_ACCESSED = 30;
                     }
                 }
                 startGremlin();
