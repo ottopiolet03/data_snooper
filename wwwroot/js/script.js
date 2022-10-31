@@ -43,7 +43,7 @@ function load_data(database_name) {
                     let graph = data;
                     // assign vertices to nodes array
                     graph.vertices.forEach(function (vertex) {
-                        nodes1[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, schema: vertex.properties.schema[0].value, database: vertex.properties.database[0].value /*last_accessed: vertex.properties.last_accessed[0].value, schema: vertex.properties.schema[0].value */ };
+                        nodes1[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, schema: vertex.properties.schema[0].value, database: vertex.properties.database[0].value, last_accessed: vertex.properties.last_accessed[0].value };
                         if (types.indexOf(vertex.label) === -1) {
                             types.push(vertex.label);
                         }
@@ -381,7 +381,7 @@ function highlightNodes(e, input, search_type) {
 };
 
 search_box.addEventListener("keydown", function (e) {
-    e.preventDefault();
+    
     if (e.code === 'Enter' && search_box.value != null && search_box.value != "") {
         highlightNodes(e, search_box.value, search_input.value);
     }
