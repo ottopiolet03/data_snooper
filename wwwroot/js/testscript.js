@@ -57,6 +57,7 @@ $(`#add_config`).on('click', event => {
         res.json().then(d => console.log(d));
         all_configs[database] = { database: database, server: server, username: username, password: password };
         let table = $(`tbody`);
+        password = "".padStart(password.length, '*');
         let output = `<tr class="data" id="${server}.${database}">
                                 <td class="col-xs-3">${server}</td>
                                 <td class="database col-xs-3">${database}</td>

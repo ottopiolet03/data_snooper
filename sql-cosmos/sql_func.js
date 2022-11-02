@@ -86,7 +86,7 @@ function get_configs() {
                 );
                 //on request, store needed info
                 request.on('row', columns => {
-                    data[columns[0].value] = { database: columns[0].value, server: columns[2].value, username: columns[1].value, password: columns[3].value };
+                    data[columns[0].value] = { database: columns[0].value, server: columns[1].value, username: columns[2].value, password: columns[3].value };
                 });
                 connection_config.execSql(request);
             }

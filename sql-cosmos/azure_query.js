@@ -1,11 +1,17 @@
-const AzureIdentity = require("@azure/identity");
+const AzureIdentity = require('@azure/identity');
+const AzureAuthorityHosts = AzureIdentity.AzureAuthorityHosts;
+const ClientSecretCredential = AzureIdentity.ClientSecretCredential;
 const AzureMonitorQuery = require('@azure/monitor-query');
-const util = require('util');
 
-const credential = new AzureIdentity.AzurePowerShellCredential();
+const log_config = require('config/log_config.js');
 
+const credential = new ClientSecretCredential(
+    log_config.tenant_id,
+    log_config.client_id,
+    log_config.client_secret,
+    { authorityHost: AzureAuthorityHosts.AzureGovernment });
 const logsQueryClient = new AzureMonitorQuery.LogsQueryClient(credential);
-const workspaceId = "79d5cb3a-c184-47b9-b8ce-bcc367974d4b";
+const workspaceId = log_config.workspace_id;
 let array = [{ FULL_TABLE_NAME: 'test-sql-snooper.SalesLT.Customer' }]
 
 const result = logsQueryClient.queryWorkspace(
@@ -18,7 +24,7 @@ const result = logsQueryClient.queryWorkspace(
 ).then(result => {
     //output
     let rows = result.tables[0].rows; 
-
+    console.log(rows)
 
     for (let arr in rows) {
 

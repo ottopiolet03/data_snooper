@@ -43,7 +43,7 @@ function load_data(database_name) {
                     let graph = data;
                     // assign vertices to nodes array
                     graph.vertices.forEach(function (vertex) {
-                        nodes1[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, schema: vertex.properties.schema[0].value, database: vertex.properties.database[0].value, last_accessed: vertex.properties.last_accessed[0].value };
+                        nodes1[vertex.id] = { label: vertex.label, type: vertex.label, id: vertex.id, schema: vertex.properties.schema[0].value, database: vertex.properties.database[0].value, last_accessed: parseInt(vertex.properties.last_accessed[0].value) };
                         if (types.indexOf(vertex.label) === -1) {
                             types.push(vertex.label);
                         }
@@ -339,7 +339,7 @@ function highlightNodes(e, input, search_type) {
             break;
         case 'last_accessed':
             for (let n in nodes) {
-                if (nodes[n].last_accessed == input) {
+                if (nodes[n].last_accessed <= input) {
                     newNodes[n] = nodes[n];
                     for (link_ind in links) {
                         if (links[link_ind].source.id == n) {

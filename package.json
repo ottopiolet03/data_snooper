@@ -6,6 +6,7 @@
     "d3": "^7.6.1",
     "express": "^4.18.1",
     "gremlin": "^3.6.1",
+    "passport-azure-ad": "^4.3.4",
     "path": "^0.12.7",
     "requirejs": "^2.3.6",
     "tedious": "^15.1.0"

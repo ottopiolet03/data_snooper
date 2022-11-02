@@ -66,9 +66,9 @@ function sqltest(database) {
                     );
                     //on request, store needed info
                     request.on('row', columns => {
-                        server_name = columns[2].value;
                         database_name = columns[0].value;
-                        username = columns[1].value;
+                        server_name = columns[1].value;
+                        username = columns[2].value;
                         password = columns[3].value;
                     });
 
@@ -185,14 +185,18 @@ function sqltest(database) {
         //====================================================================================Add Last Accessed Date=============================================================================================================
         function enterLastAccessed() {
             console.log('getting last accessed date');
-            const AzureIdentity = require("@azure/identity");
+            const log_config = require('./config/log_config');
+            const AzureIdentity = require('@azure/identity');
+            const AzureAuthorityHosts = AzureIdentity.AzureAuthorityHosts;
+            const ClientSecretCredential = AzureIdentity.ClientSecretCredential;
             const AzureMonitorQuery = require('@azure/monitor-query');
-            const util = require('util');
-
-            const credential = new AzureIdentity.AzurePowerShellCredential();
-
+            const credential = new ClientSecretCredential(
+                log_config.tenant_id,
+                log_config.client_id,
+                log_config.client_secret,
+                { authorityHost: AzureAuthorityHosts.AzureGovernment });
             const logsQueryClient = new AzureMonitorQuery.LogsQueryClient(credential);
-            const workspaceId = "79d5cb3a-c184-47b9-b8ce-bcc367974d4b";
+            const workspaceId = log_config.workspace_id;
 
             const result = logsQueryClient.queryWorkspace(
                 workspaceId,
@@ -238,7 +242,7 @@ function sqltest(database) {
                 }
                 for (let node in nodes) {
                     if (nodes[node].LAST_ACCESSED == undefined) {
-                        nodes[node].LAST_ACCESSED = 30;
+                        nodes[node].LAST_ACCESSED = 31;
                     }
                 }
                 startGremlin();
