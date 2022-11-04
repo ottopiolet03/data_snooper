@@ -282,7 +282,7 @@ function sqltest(database) {
             function insertVertex(node) {
                 let query = `g.addv('${node.TABLE_TYPE}').property('database', '${node.TABLE_CATALOG}').property('id', '${node.FULL_TABLE_NAME}').property('pk', 'pk').property('schema', '${node.TABLE_SCHEMA}').property('last_accessed','${node.LAST_ACCESSED}')`;
                 client.submit(query).then((res) => {
-                    console.log("Result: %s\n", JSON.stringify(res));
+                    //console.log("Result: %s\n", JSON.stringify(res));
                     if (nodes.length > 0) {
                         let next_vertex = nodes.pop();
                         insertVertex(next_vertex);
@@ -295,7 +295,7 @@ function sqltest(database) {
             function insertEdge(edge) {
                 let query = `g.v('${edge.source}').adde('child').to(g.v('${edge.target}'))`;
                 client.submit(query).then((res) => {
-                    console.log("Result: %s\n", JSON.stringify(res));
+                    //console.log("Result: %s\n", JSON.stringify(res));
                     if (edges.length > 0) {
                         let next_edge = edges.pop();
                         insertEdge(next_edge);
@@ -324,6 +324,7 @@ function sqltest(database) {
                     vertices = vertex_res;
                     client.submit(`g.V().has('database','${selected_database}').bothE()`, {}).then((edge_result) => {
                         let edges = edge_result;
+                        console.log('Closing Gremlin Connection');
                         client.close();
                         data = { vertices, edges };
                         resolve(data);

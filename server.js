@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 // create application/json parser
 var jsonParser = bodyParser.json()
 
-const sqltest = require('./sql-cosmos/sqltest.js');
+const sqltest = require('./sql-cosmos/get_config_load_graph.js');
 const sql_func = require('./sql-cosmos/sql_func.js');
 const cosmos_func = require('./sql-cosmos/cosmos_func.js');
 //set up functions to recieve data from Cosmos DB
