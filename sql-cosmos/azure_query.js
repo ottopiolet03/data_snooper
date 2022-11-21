@@ -3,7 +3,7 @@ const AzureAuthorityHosts = AzureIdentity.AzureAuthorityHosts;
 const ClientSecretCredential = AzureIdentity.ClientSecretCredential;
 const AzureMonitorQuery = require('@azure/monitor-query');
 
-const log_config = require('config/log_config.js');
+const log_config = require('./config/log_config.js');
 
 const credential = new ClientSecretCredential(
     log_config.tenant_id,
@@ -18,18 +18,20 @@ const result = logsQueryClient.queryWorkspace(
     workspaceId,
     `AzureDiagnostics
         | where statement_s  has "select" and statement_s has "from" and statement_s !has "sys." and statement_s !has "INFORMATION_SCHEMA" 
-        | project statement_s, TimeGenerated, server_instance_name_s, database_name_s, schema_name_s`,  //removed has "VIEW"
-    { duration: AzureMonitorQuery.Durations.oneDay }
+        | project statement_s, TimeGenerated, server_instance_name_s, database_name_s, schema_name_s, _schema_s`,  //removed has "VIEW"
+    { duration: AzureMonitorQuery.Durations.oneMonth }
 
 ).then(result => {
     //output
     let rows = result.tables[0].rows; 
-    console.log(rows)
+    //let headers = result.tables[0].columnDescriptors;
+    //console.log(rows)
 
     for (let arr in rows) {
 
         //filter output into 'database.schema.table'
         let query = rows[arr];
+        console.log(query);
         let statement = query[0];
         let statement_lower = statement.toLowerCase();
         let begin_name = statement.substring(statement_lower.indexOf('from ') + 5);

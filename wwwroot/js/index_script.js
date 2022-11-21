@@ -118,8 +118,8 @@ function add_load_func() {
             method: "POST",
             body: JSON.stringify({ database: database, server: server, configs: configs })
         }).then(res => {
-            window.location.replace('/graph.html');
-        })
+            //window.location.replace('/graph.html');
+        }).catch(error => console.log(error));
     });
 }
 
