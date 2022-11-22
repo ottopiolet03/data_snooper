@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 var cookieParser = require('cookie-parser');
+var cookieSession = require("cookie-session");
 var expressSession = require('express-session');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
@@ -11,7 +12,7 @@ var jsonParser = bodyParser.json()
 const passport = require('passport');
 const config = require('./config.js');
 
-var OIDCStrategy = require('passport-azure-ad').OIDCStrategy
+var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
 const sqltest = require('./sql-cosmos/get_config_load_graph.js');
 const sql_func = require('./sql-cosmos/sql_func.js');
 const cosmos_func = require('./sql-cosmos/cosmos_func.js');
@@ -84,7 +85,24 @@ var findByOid = function (oid, fn) {
 const app = express();
 app.use(methodOverride());
 app.use(cookieParser());
-app.use(expressSession({ secret: 'keyboard cat', resave: true, saveUninitialized: false }));
+app.use(
+    cookieSession({
+        name: "__session",
+        keys: ["key1"],
+        maxAge: 24 * 60 * 60 * 100,
+        secure: true,
+        httpOnly: true,
+        sameSite: 'none'
+    })
+);
+app.use(expressSession({ secret: 'keyboard cat', resave: true, saveUninitialized: false, cookie: { httpOnly: true, SameSite: 'lax'} }));
+app.use(
+    cors({
+        credentials: true,
+        origin: '*' 
+    })
+);
+app.set('trust proxy', 1)
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
@@ -114,18 +132,30 @@ app.use(express.static(__dirname + "/wwwroot"));
 // sendFile will go here
 app.use(express.json());
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '/index.html'));
+    res.sendFile(path.join(__dirname, '/wwwroot/index.html'));
 })
-app.post('/login', function (req, res) {
-    res.sendFile(path.join(__dirname, '/login.html'))
+app.post('/index', ensureAuthenticated, function (req, res) {
+    console.log('jey');
+    res.sendFile(path.join(__dirname, '/wwwroot/index.html'));
 })
-app.post('/load', function (req, res, next) {
-        passport.authenticate('azuread-openidconnect', {
-            response: res,                      // required
-            resourceURL: config.resourceURL,    // optional. Provide a value if you want to specify the resource.
-            failureRedirect: '/'
-        })(req, res, next);
-    }, function (req, res) {
+app.get('/login', function (req, res) {
+    res.sendFile(path.join(__dirname, '/wwwroot/login.html'))
+})
+app.get('/auth', function (req, res, next) {
+    res.set('Access-Control-Allow-Origin', '*');
+    next();
+}, function (req, res, next) {
+    passport.authenticate('azuread-openidconnect', {
+        response: res,                      // required
+        resourceURL: config.resourceURL,    // optional. Provide a value if you want to specify the resource.
+        failureRedirect: '/'
+    })(req, res, next);
+},
+    function (req, res) {
+        res.redirect('/index');
+    });
+
+app.post('/load', function (req, res) {
         database = req.body.database;
         server = req.body.server;
         configs = req.body.configs;
@@ -168,8 +198,8 @@ app.post('/remove_cosmos', function (req, res) {
 app.post('/sqltest', jsonParser, function (request, result, next) {
         var data = sqltest.load_data(request.body.name);
         data.then(res => {
-                result.send(res);
-            }).catch(res => result.send(res));    
+            result.send(res);
+         }).catch(res => result.send(res));    
 });
 
 app.listen(port);

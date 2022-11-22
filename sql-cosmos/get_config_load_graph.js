@@ -3,6 +3,8 @@ function sqltest(database) {
     return new Promise((resolve, reject) => {
         const { Connection, Request } = require("tedious");
         const sql_config = require('./config/sql_config');
+        const queries = require('./config/queries');
+
         let data;
 
         //global variables
@@ -56,6 +58,7 @@ function sqltest(database) {
                                         reject(err);
                                     } else {
                                         //after connection made, run queries
+                                        console.log('vertex query');
                                         queryDatabase();
 
                                     }
@@ -83,16 +86,13 @@ function sqltest(database) {
         var node_queue = [];     // this is only views
 
 
-
+        //---------------------------
 
         function queryDatabase() {
 
             // first read views
             const request_db = new Request(
-                `SELECT 
-            *
-        FROM [INFORMATION_SCHEMA].[TABLES]
-        WHERE [TABLE_TYPE] IN('VIEW')`,
+                queries.vertex_query.query('', '', ''),
                 (err, rowCount) => {
                     if (err) {
                         reject(err);
@@ -100,8 +100,18 @@ function sqltest(database) {
                         console.log(`${rowCount} row(s) returned`);
 
                         //then read tables
-                        console.log("table query");
-                        connection.execSql(request_table);
+                        console.log("edge query");
+                        if (node_queue.length > 0) {
+                            let next = node_queue.pop();
+                            let request_edge = create_edge_request(next);
+                            connection.execSql(request_edge);
+                        }
+                        else {
+                            //console.log(nodes);
+                            //console.log(edges);
+                            connection.close();
+                            enterLastAccessed();
+                        }
                     }
                 }
             );
@@ -113,43 +123,9 @@ function sqltest(database) {
                 nodes.push(input);
             });
 
-
-
-            // second read tables
-            const request_table = new Request(
-                `SELECT 
-            *
-        FROM [INFORMATION_SCHEMA].[TABLES]
-        WHERE [TABLE_TYPE] IN('BASE TABLE')`,
-                (err, rowCount) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        console.log(`${rowCount} row(s) returned`);
-                        //console.log(nodes);
-
-                        let ele = node_queue.pop();
-                        var request_edge = create_edge_request(ele);
-                        connection.execSql(request_edge);
-                    }
-                }
-            );
-
-            request_table.on("row", columns => {
-                var input = { 'TABLE_CATALOG': columns[0].value, 'TABLE_SCHEMA': columns[1].value, 'TABLE_NAME': columns[2].value, 'TABLE_TYPE': 'TABLE', 'FULL_TABLE_NAME': columns[0].value + '.' + columns[1].value + '.' + columns[2].value };
-                nodes.push(input);
-            });
-
-
             function create_edge_request(node_name) {
                 const request_table_edges = new Request(
-                    `SELECT
-                distinct(re.referenced_entity_name) as referenced_view_name, o.type, SCHEMA_NAME(o.schema_id) as schema_name
-            FROM
-                sys.dm_sql_referenced_entities (
-                    '${node_name}',
-                    'OBJECT') as re
-                            INNER JOIN sys.objects o on  o.name=re.referenced_entity_name`,
+                    queries.edge_query.query('','','',node_name),
                     (err, rowCount) => {
                         if (err) {
                             reject(err);
@@ -200,9 +176,7 @@ function sqltest(database) {
 
             const result = logsQueryClient.queryWorkspace(
                 workspaceId,
-                `AzureDiagnostics
-                  | where statement_s  has "select" and statement_s has "from" and statement_s !has "sys." and statement_s !has "INFORMATION_SCHEMA" and database_name_s has "${database}"
-                  | project statement_s, TimeGenerated, server_instance_name_s, database_name_s, schema_name_s`,  //removed has "VIEW"
+                queries.property_querys[0].query('','',database),  //removed has "VIEW"
                 { duration: AzureMonitorQuery.Durations.oneMonth }
 
             ).then(result => {
